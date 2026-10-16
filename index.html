@@ -1,566 +1,888 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Paul Stephen | Systems Engineer </title>
-<meta name="description" content="Paul Stephen — Production-first AI systems, backend engineering and Flutter apps.">
-
-<!-- Google Fonts: Cinzel for Dark Knight / Sovereign Serif, JetBrains Mono for Code/Metrics, Inter for body text -->
+<title>Paul Stephen | AI Systems Engineer & Backend Architect</title>
+<meta name="description" content="Production-first AI systems, self-hosted RAG pipelines, high-throughput async backends, and Flutter apps by Paul Stephen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<!-- Tailwind CSS via CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          doom: {
-            bg: '#060807',
-            surface: '#0d1210',
-            panel: '#121a16',
-            border: '#1b2c24',
-            emerald: '#10b981',
-            glow: '#00ffaa',
-            gold: '#d4af37',
-            goldbright: '#f3e5ab',
-            text: '#e2e8f0',
-            muted: '#8ba398',
-            darkmuted: '#4a6358'
-          }
-        },
-        fontFamily: {
-          cinzel: ['Cinzel', 'serif'],
-          mono: ['JetBrains Mono', 'monospace'],
-          sans: ['Inter', 'sans-serif'],
-        }
-      }
-    }
-  }
-</script>
-
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg-dark: #060807;
-    --emerald: #10b981;
-    --emerald-glow: rgba(0, 255, 170, 0.15);
-    --gold: #d4af37;
-  }
+:root {
+  --bg: #030406;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #0d1117 0%, #030406 70%);
+  --surface: #0a0d12;
+  --surface-glass: rgba(10, 13, 18, 0.75);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(0, 230, 118, 0.3);
+  --text-main: #f0f3f6;
+  --text-muted: #8b949e;
+  --accent: #00e676; /* Latverian Emerald / Dark Knight Cyber Glow */
+  --accent-glow: rgba(0, 230, 118, 0.15);
+  --accent-secondary: #3b82f6;
+  --font-serif: 'Cinzel', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+  --max-width: 1200px;
+}
 
-  body {
-    background-color: var(--bg-dark);
-    color: #e2e8f0;
-    font-family: 'Inter', sans-serif;
-    background-image: 
-      radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 40%);
-    background-attachment: fixed;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); color: var(--text-main); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { background: var(--bg-gradient); min-height: 100vh; overflow-x: hidden; position: relative; }
 
-  /* Doom Armor Metallic Border & Clip Corner Aesthetics */
-  .armor-card {
-    background: linear-gradient(135deg, rgba(13, 18, 16, 0.95) 0%, rgba(18, 26, 22, 0.85) 100%);
-    border: 1px solid rgba(27, 44, 36, 0.8);
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-  }
+/* Apple-style floating pill glass navigation */
+header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  z-index: 1000;
+  background: rgba(5, 7, 10, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  .armor-card:hover {
-    border-color: rgba(16, 185, 129, 0.5);
-    box-shadow: 0 0 25px -5px rgba(0, 255, 170, 0.12), inset 0 0 15px rgba(16, 185, 129, 0.03);
-    transform: translateY(-2px);
-  }
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  /* Sharp chamfer corners for Latverian cyber-armor motif */
-  .chamfer-corner {
-    clip-path: polygon(
-      0 0, 
-      calc(100% - 12px) 0, 
-      100% 12px, 
-      100% 100%, 
-      12px 100%, 
-      0 calc(100% - 12px)
-    );
-  }
+.brand {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--text-main);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .gold-glow-text {
-    text-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
-  }
+.brand::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+}
 
-  .emerald-glow-text {
-    text-shadow: 0 0 12px rgba(0, 255, 170, 0.4);
-  }
+nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
 
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #060807;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #1b2c24;
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #10b981;
-  }
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
 
-  /* Subtle Scanline Overlay */
-  .scanline-overlay {
-    background: linear-gradient(
-      to bottom,
-      rgba(255,255,255,0),
-      rgba(255,255,255,0) 50%,
-      rgba(0, 0, 0, 0.25) 50%,
-      rgba(0, 0, 0, 0.25)
-    );
-    background-size: 100% 4px;
-    pointer-events: none;
-  }
+nav a:hover, nav a[aria-current="true"] {
+  color: var(--accent);
+}
 
-  .fade-up {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  }
-  .fade-up.in {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.nav-cta {
+  background: var(--accent);
+  color: #030406 !important;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700 !important;
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.nav-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 230, 118, 0.5);
+}
+
+/* Layout container */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+main {
+  padding-top: 140px;
+}
+
+/* Hero Section */
+.hero {
+  padding: 60px 0 100px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-content h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  background: linear-gradient(180deg, #ffffff 30%, #8b949e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-content h1 span {
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+  text-shadow: 0 0 30px var(--accent-glow);
+}
+
+.hero-lead {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 36px;
+  max-width: 600px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #030406;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 30px rgba(0, 230, 118, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(0, 230, 118, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Terminal Card (Doom/Knight Obsidian Vibe) */
+.terminal-card {
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+}
+
+.terminal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+.terminal-dots span:nth-child(1) { background: #ff5f56; }
+.terminal-dots span:nth-child(2) { background: #ffbd2e; }
+.terminal-dots span:nth-child(3) { background: #27c93f; }
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.metric-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.3s ease;
+}
+
+.metric-box:hover {
+  border-color: var(--accent);
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Sections */
+section {
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin-bottom: 50px;
+}
+
+/* AI Era Control Grid */
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ai-card {
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  position: relative;
+}
+
+.ai-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 230, 118, 0.4);
+}
+
+.ai-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  margin-bottom: 14px;
+  color: var(--text-main);
+}
+
+.ai-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.ai-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  background: rgba(0, 230, 118, 0.1);
+  color: var(--accent);
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+/* Strategy & Execution Process */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.process-card {
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+}
+
+.process-step {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.process-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.process-card p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* Codebase / Project Repositories Grid (GitHub & GitLab) */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 230, 118, 0.4);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.platform-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  color: var(--text-muted);
+}
+
+.project-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.project-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+/* Modal Overlay & Embedded PDF Viewer */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(3, 4, 6, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 900px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9);
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active .modal-container {
+  transform: scale(1);
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 13, 18, 0.9);
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+}
+
+.modal-body {
+  flex: 1;
+  width: 100%;
+  background: #0d1117;
+}
+
+.modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Contact Footer Section */
+.contact-section {
+  text-align: center;
+  padding: 120px 0;
+  background: radial-gradient(circle at 50% 100%, rgba(0, 230, 118, 0.05) 0%, transparent 60%);
+}
+
+.contact-box {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 60px 40px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+}
+
+.contact-box h2 {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+}
+
+.contact-box p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+}
+
+footer {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+}
+
+/* Responsive queries */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; }
+  .ai-grid, .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  header { width: 94%; top: 12px; padding: 8px 16px; }
+  nav .nav-link-item { display: none; }
+  .ai-grid, .projects-grid, .process-grid { grid-template-columns: 1fr; }
+  .contact-box { padding: 40px 20px; }
+}
 </style>
 </head>
-<body class="min-h-screen text-doom-text antialiased selection:bg-doom-emerald selection:text-black relative">
+<body>
 
-<!-- Background Scanlines -->
-<div class="fixed inset-0 scanline-overlay z-50 opacity-30"></div>
-
-<!-- HEADER / NAV -->
-<header class="sticky top-0 z-40 backdrop-blur-md bg-doom-bg/80 border-b border-doom-border/60">
-  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-    <!-- Brand Title -->
-    <a href="#top" class="group flex items-center gap-3 text-decoration-none">
-      <div class="w-8 h-8 rounded border border-doom-gold/40 flex items-center justify-center bg-doom-surface group-hover:border-doom-emerald transition-colors">
-        <span class="font-cinzel text-doom-gold group-hover:text-doom-glow font-bold text-lg">P</span>
-      </div>
-      <span class="font-cinzel font-bold tracking-widest text-lg text-slate-100 group-hover:text-doom-gold transition-colors uppercase">
-        Paul Stephen
-      </span>
-    </a>
-
-    <!-- Navigation -->
-    <nav class="hidden md:flex items-center gap-1 font-mono text-xs tracking-wider" aria-label="Primary">
-      <a href="#about" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/About</a>
-      <a href="#projects" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/Work</a>
-      <a href="#github-projects" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/GitHub</a>
-      <a href="#contact" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/Contact</a>
-      
-      <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="ml-4 px-5 py-2.5 rounded bg-gradient-to-r from-doom-emerald to-emerald-700 text-black font-bold uppercase font-mono tracking-wider hover:brightness-110 hover:shadow-[0_0_15px_rgba(0,255,170,0.4)] transition-all">
-        Hire Me
-      </a>
+<!-- Floating Apple-style Minimal Glass Header -->
+<header>
+  <div class="container header-inner">
+    <a class="brand" href="#top">PAUL STEPHEN</a>
+    <nav aria-label="Primary">
+      <a class="nav-link-item" href="#ai-era">AI Control</a>
+      <a class="nav-link-item" href="#strategy">Strategy</a>
+      <a class="nav-link-item" href="#repositories">Codebases</a>
+      <a class="nav-link-item" href="#about">About</a>
+      <a class="nav-cta" href="https://wa.me/919108800104?text=Hi%20Paul,%20I%20found%20your%20portfolio%20and%20want%20to%20start%20a%20conversation%20regarding%20a%20project." target="_blank" rel="noopener">WhatsApp Me</a>
     </nav>
-
-    <!-- Mobile Button -->
-    <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="md:hidden px-4 py-2 rounded bg-doom-emerald text-black font-bold font-mono text-xs uppercase">
-      Hire
-    </a>
   </div>
 </header>
 
-<main id="top" class="max-w-6xl mx-auto px-6 pt-10 pb-20 space-y-24">
-
-  <!-- HERO SECTION -->
-  <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-8">
-    <div class="lg:col-span-8 space-y-8">
-      
-     
-      <!-- Main Headline -->
-      <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl font-black text-slate-100 leading-tight tracking-tight">
-        Systems & Backends That <span class="text-transparent bg-clip-text bg-gradient-to-r from-doom-goldbright via-doom-gold to-yellow-600 gold-glow-text">Ship, Perform</span> & Scale.
-      </h1>
-
-      <p class="text-slate-300 text-lg leading-relaxed max-w-2xl font-sans">
-        Production-first engineering: RAG & LLM integrations, high‑performance backends and cross‑platform Flutter apps. Polished, reliable systems — with clear ownership, measurable impact and predictable delivery.
-      </p>
-
-      <!-- CTA Action Buttons -->
-      <div class="flex flex-wrap items-center gap-4 pt-2">
-        <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="px-6 py-3.5 rounded bg-gradient-to-r from-doom-emerald to-emerald-600 text-black font-bold font-mono text-sm tracking-wider uppercase hover:brightness-110 hover:shadow-[0_0_20px_rgba(0,255,170,0.5)] transition-all">
-          Start a Conversation
-        </a>
-        <a href="#github-projects" class="px-6 py-3.5 rounded border border-doom-border bg-doom-surface hover:border-doom-emerald/50 text-doom-text font-mono text-sm tracking-wider uppercase transition-all">
-          See Code &rarr;
-        </a>
-      </div>
-
-      <p class="text-xs font-mono text-doom-muted flex items-center gap-2 pt-1">
-        <span class="text-doom-emerald">▪</span> Available for contract and product work. I reply within one business day.
-      </p>
-
-      <!-- Target Audience / Who I work with -->
-      <div class="pt-8 border-t border-doom-border/50 fade-up" data-fade>
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <h3 class="font-cinzel font-bold text-doom-gold text-base uppercase tracking-wider">Who I Work With</h3>
-          <span class="text-xs font-mono text-doom-muted uppercase">Startups • Product Teams • Founders • Engineering Leads</span>
-        </div>
-
-        <ul class="grid gap-3 font-sans text-sm text-doom-text">
-          <li class="p-3.5 rounded bg-doom-surface/60 border border-doom-border/60 hover:border-doom-emerald/40 transition-colors">
-            <strong class="text-slate-100 font-semibold">Startups:</strong> Ship an MVP that’s production‑ready from day one, with observability and testing in place.
-          </li>
-          <li class="p-3.5 rounded bg-doom-surface/60 border border-doom-border/60 hover:border-doom-emerald/40 transition-colors">
-            <strong class="text-slate-100 font-semibold">Businesses:</strong> Replace manual workflows with reliable automation and RAG-driven knowledge bases.
-          </li>
-          <li class="p-3.5 rounded bg-doom-surface/60 border border-doom-border/60 hover:border-doom-emerald/40 transition-colors">
-            <strong class="text-slate-100 font-semibold">Teams:</strong> Diagnose and fix performance issues — databases, APIs or inference pipelines.
-          </li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- METRICS PANEL (SIDEBAR) -->
-    <aside class="lg:col-span-4 armor-card chamfer-corner p-6 space-y-6 fade-up" data-fade>
-      <div class="flex items-center justify-between pb-3 border-b border-doom-border">
-        <span class="font-cinzel font-bold text-doom-gold uppercase tracking-wider text-sm">Key Metrics</span>
-        <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-doom-emerald/10 text-doom-emerald border border-doom-emerald/30">Verified</span>
-      </div>
-
-      <div class="space-y-4 font-mono">
-        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
-          <span class="text-xs text-doom-muted uppercase">RAG Answer Accuracy</span>
-          <span class="text-lg font-bold text-doom-glow emerald-glow-text">92%</span>
-        </div>
-        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
-          <span class="text-xs text-doom-muted uppercase">Query Execution</span>
-          <span class="text-lg font-bold text-doom-gold gold-glow-text">−77%</span>
-        </div>
-        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
-          <span class="text-xs text-doom-muted uppercase">Inference Latency</span>
-          <span class="text-lg font-bold text-doom-gold gold-glow-text">−30%</span>
-        </div>
-        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
-          <span class="text-xs text-doom-muted uppercase">Mobile Load</span>
-          <span class="text-lg font-bold text-doom-gold gold-glow-text">−25%</span>
+<main id="top">
+  <div class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero" style="border: none; padding-top: 40px;">
+      <div class="hero-content">
+        <div class="ai-tag">SYSTEMS ENGINEER & AI ARCHITECT</div>
+        <h1>Architecting <span>Production AI</span> & High-Speed Backends.</h1>
+        <p class="hero-lead">End-to-end ownership with absolute precision. Delivering self-hosted RAG pipelines, 5x asynchronous throughput scaling, and resilient microservices designed for regulated financial and document-heavy ecosystems.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="https://wa.me/919108800104?text=Hi%20Paul,%20let's%20start%20a%20conversation." target="_blank" rel="noopener">
+            Start Conversation (WhatsApp)
+          </a>
+          <button class="btn-secondary" id="openResumeBtn">
+            View Full Resume
+          </button>
         </div>
       </div>
 
-      <p class="text-xs text-doom-muted leading-relaxed font-sans pt-2 border-t border-doom-border/50">
-        I focus on measurable outcomes: lower latency, lower cost, higher accuracy and maintainability.
-      </p>
-    </aside>
-  </section>
-
-  <!-- ABOUT SECTION -->
-  <section id="about" class="pt-10 border-t border-doom-border/60">
-    <div class="space-y-2 mb-8">
-      <h2 class="font-cinzel text-3xl font-bold text-slate-100 tracking-wide uppercase">About</h2>
-      <p class="text-sm font-mono text-doom-muted">A short professional summary, responsibilities and working style for hiring managers.</p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      <!-- Main Bio -->
-      <div class="lg:col-span-7 armor-card p-6 space-y-6 fade-up" data-fade>
-        <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-sans">
-          I’m <strong class="text-slate-100 font-semibold">Paul Stephen</strong>, an engineer based in Bengaluru with experience delivering production ML systems, fast backends and cross-platform mobile apps. I take end-to-end responsibility: architecture, implementation, testing, deployment and operational runbooks. I prioritise reliability, observability and predictable delivery so product teams can move quickly without accruing technical debt.
-        </p>
-
-        <div class="space-y-3 pt-2">
-          <h3 class="font-cinzel text-doom-gold font-bold uppercase text-sm tracking-wider">What I Bring</h3>
-          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-300 font-sans">
-            <li class="flex items-start gap-2.5">
-              <span class="text-doom-emerald mt-1">❖</span>
-              <span>Design and ship RAG pipelines with tuned retrieval and grounding, integrated with LLMs.</span>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-doom-emerald mt-1">❖</span>
-              <span>Profile and optimise databases and APIs for production load (Postgres, caching, optimized SQL).</span>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-doom-emerald mt-1">❖</span>
-              <span>Build maintainable Flutter apps with clean architecture, BLoC/state management and performant UI.</span>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-doom-emerald mt-1">❖</span>
-              <span>Integrate models into workflows, add automated quality gates and monitoring.</span>
-            </li>
-          </ul>
+      <aside class="terminal-card">
+        <div class="terminal-header">
+          <span>PRODUCTION METRICS // VERIFIED</span>
+          <div class="terminal-dots"><span></span><span></span><span></span></div>
         </div>
-      </div>
-
-      <!-- Process & Guarantees -->
-      <aside class="lg:col-span-5 armor-card p-6 space-y-6 fade-up" data-fade>
-        <div>
-          <h3 class="font-cinzel font-bold text-doom-gold uppercase tracking-wider text-base">Process & Guarantees</h3>
-          <p class="text-xs font-mono text-doom-muted mt-1">How I structure engagements so outcomes are predictable.</p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 font-mono">
-          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
-            <span class="text-xs text-doom-emerald font-bold">01 / DISCOVERY</span>
-            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Discovery</h4>
-            <p class="text-[11px] text-doom-muted mt-1 leading-tight">Goal, KPIs & architecture review</p>
+        <div class="metric-grid">
+          <div class="metric-box">
+            <div class="metric-value">97%</div>
+            <div class="metric-label">Routing Accuracy (71% → 97%)[cite: 1]</div>
           </div>
-
-          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
-            <span class="text-xs text-doom-emerald font-bold">02 / PROOF</span>
-            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Proof</h4>
-            <p class="text-[11px] text-doom-muted mt-1 leading-tight">MVP, benchmarks, acceptance criteria</p>
+          <div class="metric-box">
+            <div class="metric-value">−80%</div>
+            <div class="metric-label">SLA Breach Reduction[cite: 1]</div>
           </div>
-
-          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
-            <span class="text-xs text-doom-emerald font-bold">03 / SHIP</span>
-            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Ship</h4>
-            <p class="text-[11px] text-doom-muted mt-1 leading-tight">Deployment, testing, monitoring</p>
+          <div class="metric-box">
+            <div class="metric-value">5x</div>
+            <div class="metric-label">Async Throughput (1,200+ emails/min)[cite: 1]</div>
           </div>
-
-          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
-            <span class="text-xs text-doom-emerald font-bold">04 / OPERATE</span>
-            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Operate</h4>
-            <p class="text-[11px] text-doom-muted mt-1 leading-tight">Runbooks, SLOs, handover</p>
+          <div class="metric-box">
+            <div class="metric-value">&lt;10s</div>
+            <div class="metric-label">Enterprise Document Search[cite: 1]</div>
           </div>
         </div>
       </aside>
+    </section>
 
-    </div>
-  </section>
+    <!-- AI Era Mastery & Control -->
+    <section id="ai-era">
+      <div class="section-title">AI Era Mastery & Absolute Control</div>
+      <p class="section-subtitle">How I leverage and govern modern AI tooling with maximum speed, zero data leakage, and uncompromising structural governance.</p>
 
-  <!-- SELECTED WORK / PROJECTS -->
-  <section id="projects" class="pt-10 border-t border-doom-border/60">
-    <div class="space-y-2 mb-8">
-      <h2 class="font-cinzel text-3xl font-bold text-slate-100 tracking-wide uppercase">Selected Work</h2>
-      <p class="text-sm font-mono text-doom-muted">Concise case highlights designed for recruiters and engineering leads.</p>
-    </div>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <div class="ai-tag">ZERO-LEAK PRIVACY</div>
+          <h3>Self-Hosted RAG Pipelines</h3>
+          <p>Deploying end-to-end ingestion, OCR parsing, chunking, and hybrid retrieval on Ollama and FAISS. Zero external API costs and absolute data ownership for sensitive financial workflows[cite: 1].</p>
+        </div>
+        <div class="ai-card">
+          <div class="ai-tag">AGENTIC ORCHESTRATION</div>
+          <h3>LangGraph & Multi-Stage Agents</h3>
+          <p>Building autonomous code analyzers and multi-agent loops that map complex enterprise codebases, extract deep architectural insights, and automate developer workflows instantly.</p>
+        </div>
+        <div class="ai-card">
+          <div class="ai-tag">PRODUCTION GUARDRAILS</div>
+          <h3>Deterministic Fallbacks</h3>
+          <p>Pairing probabilistic LLM inferences with strict rule-based fallbacks, evaluation gates, and caching layers to guarantee absolute reliability under enterprise production loads[cite: 1].</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="space-y-6">
-      
-      <!-- Project 1 -->
-      <article class="armor-card p-6 sm:p-8 space-y-4 fade-up" data-fade>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-doom-border/60 pb-4">
+    <!-- Strategy, Strength & On-Time Execution -->
+    <section id="strategy">
+      <div class="section-title">Execution Strategy & Responsibility</div>
+      <p class="section-subtitle">A structured methodology focused on accuracy, speed, crystal-clear requirements, and verifiable proof of delivery.</p>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="process-step">PHASE 01</div>
+          <h4>Clear Requirements</h4>
+          <p>Deep technical discovery to lock down acceptance criteria, KPIs, and architectural boundaries before writing a single line of code.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-step">PHASE 02</div>
+          <h4>Rapid Prototyping</h4>
+          <p>Building high-speed MVPs and benchmarks to prove core mechanics and validate retrieval or scaling accuracy early.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-step">PHASE 03</div>
+          <h4>Production Hardening</h4>
+          <p>Adding rate-limiting, exponential backoff, dead-letter queues, and asynchronous workers to achieve 99.7%+ delivery reliability[cite: 1].</p>
+        </div>
+        <div class="process-card">
+          <div class="process-step">PHASE 04</div>
+          <h4>On-Time Delivery</h4>
+          <p>Predictable execution backed by comprehensive runbooks, automated CI/CD pipelines, and zero-incident operational handovers[cite: 1].</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Codebases / GitHub & GitLab Repositories -->
+    <section id="repositories">
+      <div class="section-title">Production Codebases (GitHub & GitLab)</div>
+      <p class="section-subtitle">Real-world code proofs showcasing scalable backends, agentic AI tools, and cross-platform architecture.</p>
+
+      <div class="projects-grid">
+        <a class="project-card" href="https://github.com/paulsteven2329/Agentic-Codebase-Analyzer" target="_blank" rel="noopener">
           <div>
-            <h3 class="font-cinzel text-xl font-bold text-slate-100">RAG AI System — Enterprise Knowledge</h3>
-            <p class="text-xs font-mono text-doom-muted mt-1">
-              <span class="text-slate-300">Problem:</span> slow manual document search &nbsp;|&nbsp; 
-              <span class="text-slate-300">Solution:</span> full RAG pipeline &nbsp;|&nbsp; 
-              <span class="text-slate-300">Result:</span> 92% accuracy at scale
-            </p>
+            <div class="project-top">
+              <span class="platform-badge">GitHub</span>
+              <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Python / LangGraph</span>
+            </div>
+            <h3>Agentic-Codebase-Analyzer</h3>
+            <p>Local multi-stage agent that maps repository dependencies and generates automated architecture summaries.</p>
           </div>
-          <div class="font-mono text-xs font-bold px-3 py-1.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-glow w-max">
-            Impact: 92% Accuracy
-          </div>
-        </div>
-        <p class="text-sm text-slate-300 leading-relaxed font-sans">
-          Built custom chunking, embeddings and search stacks (FAISS, vector store) with a FastAPI service and production monitoring. Replaced manual review workflows and reduced human effort by X% (client confidential).
-        </p>
-      </article>
+          <div class="project-footer"><span>View Repository &rarr;</span></div>
+        </a>
 
-      <!-- Project 2 -->
-      <article class="armor-card p-6 sm:p-8 space-y-4 fade-up" data-fade>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-doom-border/60 pb-4">
+        <a class="project-card" href="https://gitlab.com/paulsteven2329" target="_blank" rel="noopener">
           <div>
-            <h3 class="font-cinzel text-xl font-bold text-slate-100">Query Optimisation — Transactional Backend</h3>
-            <p class="text-xs font-mono text-doom-muted mt-1">
-              <span class="text-slate-300">Problem:</span> timeouts and slow endpoints &nbsp;|&nbsp; 
-              <span class="text-slate-300">Solution:</span> profiling, indexes, caching &nbsp;|&nbsp; 
-              <span class="text-slate-300">Result:</span> 77% faster queries
-            </p>
+            <div class="project-top">
+              <span class="platform-badge" style="color: #fc6d26; border-color: rgba(252,109,38,0.3);">GitLab Ecosystem</span>
+              <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">CI/CD & Microservices</span>
+            </div>
+            <h3>Enterprise GitLab Repositories</h3>
+            <p>Production CI/CD pipelines, secure backend microservices, and asynchronous event-driven architectures.</p>
           </div>
-          <div class="font-mono text-xs font-bold px-3 py-1.5 rounded bg-doom-gold/10 border border-doom-gold/30 text-doom-gold w-max">
-            Impact: −77% Latency
+          <div class="project-footer"><span>View GitLab Profile &rarr;</span></div>
+        </a>
+
+        <a class="project-card" href="https://github.com/paulsteven2329/Agentic-Multimodal-ai" target="_blank" rel="noopener">
+          <div>
+            <div class="project-top">
+              <span class="platform-badge">GitHub</span>
+              <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Python / AI</span>
+            </div>
+            <h3>Agentic-Multimodal-ai</h3>
+            <p>Multimodal agent experimentation platform integrating local vision and text processing models.</p>
           </div>
-        </div>
-        <p class="text-sm text-slate-300 leading-relaxed font-sans">
-          Used EXPLAIN ANALYZE, rewrote N+1 patterns and added caching layers; throughput and error rates improved under load.
-        </p>
-      </article>
+          <div class="project-footer"><span>View Repository &rarr;</span></div>
+        </a>
 
-    </div>
-  </section>
-
-  <!-- GITHUB REPOSITORIES -->
-  <section id="github-projects" class="pt-10 border-t border-doom-border/60">
-    <div class="space-y-2 mb-8">
-      <h2 class="font-cinzel text-3xl font-bold text-slate-100 tracking-wide uppercase">GitHub Archives</h2>
-      <p class="text-sm font-mono text-doom-muted">Public repositories — production projects, tooling and experiments. Click to view code and read READMEs.</p>
-    </div>
-
-    <!-- Repos Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      
-      <a href="https://github.com/paulsteven2329/Agentic-Codebase-Analyzer" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
-        <div>
-          <div class="flex items-center justify-between font-mono text-xs mb-2">
-            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
-            <span class="text-doom-muted">· 0 stars</span>
+        <a class="project-card" href="https://github.com/paulsteven2329/FAST_API" target="_blank" rel="noopener">
+          <div>
+            <div class="project-top">
+              <span class="platform-badge">GitHub</span>
+              <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Python / FastAPI</span>
+            </div>
+            <h3>FAST_API Microservices</h3>
+            <p>High-throughput async backend services optimized for concurrency, caching, and low latency.</p>
           </div>
-          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Agentic-Codebase-Analyzer</h3>
-          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">AI-powered code analysis and insight extraction.</p>
-        </div>
-        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
-      </a>
+          <div class="project-footer"><span>View Repository &rarr;</span></div>
+        </a>
 
-      <a href="https://github.com/paulsteven2329/Agentic-Multimodal-ai" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
-        <div>
-          <div class="flex items-center justify-between font-mono text-xs mb-2">
-            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
-            <span class="text-doom-muted">· 0 stars</span>
+        <a class="project-card" href="https://github.com/paulsteven2329/Money-FlowX" target="_blank" rel="noopener">
+          <div>
+            <div class="project-top">
+              <span class="platform-badge">GitHub</span>
+              <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Flutter / Dart</span>
+            </div>
+            <h3>Money-FlowX</h3>
+            <p>Offline-first budgeting app featuring automated transaction categorization and anomaly detection[cite: 1].</p>
           </div>
-          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Agentic-Multimodal-ai</h3>
-          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">Multimodal agent experiments.</p>
-        </div>
-        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
-      </a>
+          <div class="project-footer"><span>View Repository &rarr;</span></div>
+        </a>
 
-      <a href="https://github.com/paulsteven2329/GenAI_Image_Generater" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
-        <div>
-          <div class="flex items-center justify-between font-mono text-xs mb-2">
-            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
-            <span class="text-doom-muted">· 0 stars</span>
+        <a class="project-card" href="https://github.com/paulsteven2329/GenAI_Image_Generater" target="_blank" rel="noopener">
+          <div>
+            <div class="project-top">
+              <span class="platform-badge">GitHub</span>
+              <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Python / GenAI</span>
+            </div>
+            <h3>GenAI_Image_Generater</h3>
+            <p>Generative image tooling and pipeline experiments with optimized local inference endpoints.</p>
           </div>
-          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">GenAI_Image_Generater</h3>
-          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">Generative image experiments & tooling.</p>
-        </div>
-        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
-      </a>
-
-      <a href="https://github.com/paulsteven2329/FAST_API" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
-        <div>
-          <div class="flex items-center justify-between font-mono text-xs mb-2">
-            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
-            <span class="text-doom-muted">· 0 stars</span>
-          </div>
-          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">FAST_API</h3>
-          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">FastAPI backends and integration examples.</p>
-        </div>
-        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
-      </a>
-
-      <a href="https://github.com/paulsteven2329/Flutter_Animation" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
-        <div>
-          <div class="flex items-center justify-between font-mono text-xs mb-2">
-            <span class="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">Dart</span>
-            <span class="text-doom-muted">· 0 stars</span>
-          </div>
-          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Flutter_Animation</h3>
-          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">UI motion and animation proofs-of-concept.</p>
-        </div>
-        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
-      </a>
-
-      <a href="https://github.com/paulsteven2329/Money-FlowX" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
-        <div>
-          <div class="flex items-center justify-between font-mono text-xs mb-2">
-            <span class="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">Dart</span>
-            <span class="text-doom-muted">· 0 stars</span>
-          </div>
-          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Money-FlowX</h3>
-          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">Budget planner app.</p>
-        </div>
-        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
-      </a>
-
-    </div>
-
-    <!-- Extra link info -->
-    <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t border-doom-border/40">
-      <a href="https://github.com/paulsteven2329" target="_blank" rel="noopener" class="px-5 py-2.5 rounded border border-doom-border bg-doom-surface text-doom-text font-mono text-xs uppercase tracking-wider hover:border-doom-emerald hover:text-doom-glow transition-all">
-        View All Repositories &rarr;
-      </a>
-      <span class="text-xs text-doom-muted font-mono">Want featured case studies? Tell me which projects to highlight and I’ll add screenshots and details.</span>
-    </div>
-  </section>
-
-  <!-- CONTACT SECTION -->
-  <section id="contact" class="pt-10 border-t border-doom-border/60">
-    <div class="armor-card chamfer-corner p-8 sm:p-12 space-y-6 text-center max-w-3xl mx-auto">
-      <h2 class="font-cinzel text-3xl font-black text-slate-100 tracking-wider uppercase">Initiate Contact</h2>
-      <p class="text-slate-300 font-sans text-sm sm:text-base max-w-md mx-auto">
-        Tell me what you’re building — I’ll reply within 24 hours.
-      </p>
-
-      <div class="pt-4">
-        <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="inline-block px-8 py-4 rounded bg-gradient-to-r from-doom-emerald via-emerald-600 to-teal-700 text-black font-bold font-mono text-sm tracking-widest uppercase hover:brightness-110 hover:shadow-[0_0_25px_rgba(0,255,170,0.6)] transition-all">
-          Email — paulsteven2930@gmail.com
+          <div class="project-footer"><span>View Repository &rarr;</span></div>
         </a>
       </div>
+    </section>
 
-      <div class="flex items-center justify-center gap-6 pt-4 font-mono text-xs text-doom-muted">
-        <a href="tel:+919108800104" class="hover:text-doom-emerald transition-colors">+91 91088 00104</a>
-        <span>•</span>
-        <a href="https://www.linkedin.com/in/paul-stephen-sde1-2b974027a" target="_blank" rel="noopener" class="hover:text-doom-emerald transition-colors">LinkedIn Profile</a>
+    <!-- About & Professional Context -->
+    <section id="about">
+      <div class="section-title">Professional Profile & Background</div>
+      <p class="section-subtitle">Engineered for absolute dependability, high performance, and rapid technical execution.</p>
+
+      <div class="ai-card" style="max-width: 100%; padding: 40px;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 16px;">Paul Stephen — Software Engineer (Backend & AI/ML)</h3>
+        <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+          Based in Bengaluru, India[cite: 1]. With 3 years of hands-on experience taking ML and GenAI systems from architectural design to robust production, I specialize in building backend services, self-hosted RAG pipelines, and high-throughput async systems that cut manual work and protect SLAs[cite: 1]. Currently engineering AI Ticket Intelligence and enterprise RAG platforms at Kinara Capital[cite: 1].
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+          <span class="ai-tag">Python & FastAPI</span>
+          <span class="ai-tag">Asyncio & Redis</span>
+          <span class="ai-tag">Ollama & FAISS</span>
+          <span class="ai-tag">PostgreSQL & pgvector</span>
+          <span class="ai-tag">Flutter & Dart</span>
+          <span class="ai-tag">Docker & AWS</span>
+        </div>
+        <button class="btn-primary" id="openResumeBtnAlt">
+          Open Complete Resume Preview
+        </button>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <!-- Contact CTA Section -->
+    <section class="contact-section" style="border: none;">
+      <div class="contact-box">
+        <h2>Ready to Build or Scale?</h2>
+        <p>Let's discuss your engineering requirements. I reply within one business day with direct architectural clarity.</p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a class="btn-primary" href="https://wa.me/919108800104?text=Hi%20Paul,%20let's%20start%20a%20conversation%20about%20my%20project." target="_blank" rel="noopener">
+            Chat on WhatsApp (+91 91088 00104)
+          </a>
+          <button class="btn-secondary" id="openResumeBtnFooter">
+            View Resume PDF
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </main>
 
-<!-- FOOTER -->
-<footer class="border-t border-doom-border/60 py-8 bg-doom-bg font-mono text-xs text-doom-muted">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-    <div class="flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-doom-emerald"></span>
-      <span>Paul Stephen — Bengaluru, India</span>
-    </div>
-   
+<footer>
+  <div class="container">
+    Paul Stephen — Bengaluru, India[cite: 1] • GitHub: paulsteven2329[cite: 1] • GitLab: paulsteven2930
   </div>
 </footer>
 
-<!-- SCRIPT FOR FADE IN AND NAV ACTIVE STATES -->
+<!-- Embedded PDF Resume Modal -->
+<div class="modal-overlay" id="resumeModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">Paul_Stephen_Resume_final.pdf</div>
+      <button class="modal-close" id="closeResumeBtn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- Replace the src below with your hosted resume PDF URL or base64 file data -->
+      <iframe src="Paul_Stephen_Resume_final.pdf" title="Paul Stephen Resume"></iframe>
+    </div>
+  </div>
+</div>
+
 <script>
-(function(){
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  // Modal interaction logic
+  const modal = document.getElementById('resumeModal');
+  const openBtns = [
+    document.getElementById('openResumeBtn'),
+    document.getElementById('openResumeBtnAlt'),
+    document.getElementById('openResumeBtnFooter')
+  ];
+  const closeBtn = document.getElementById('closeResumeBtn');
 
-  // Intersection observer for fade-up
-  const fadeEls = document.querySelectorAll('[data-fade]');
-  if(!prefersReduced && 'IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting) e.target.classList.add('in');
-      });
-    },{threshold:0.1});
-    fadeEls.forEach(el=>io.observe(el));
-  } else {
-    fadeEls.forEach(el=>el.classList.add('in'));
-  }
-
-  // Hash navigation active handling
-  const navLinks = document.querySelectorAll('nav a[href^="#"]');
-  function setCurrent(){
-    const hash = location.hash || '#top';
-    navLinks.forEach(a=>{
-      if(a.getAttribute('href')===hash){
-        a.classList.add('text-doom-emerald', 'bg-doom-panel');
-        a.classList.remove('text-doom-muted');
-      } else {
-        a.classList.remove('text-doom-emerald', 'bg-doom-panel');
-        a.classList.add('text-doom-muted');
-      }
-    });
-  }
-  window.addEventListener('hashchange', setCurrent, {passive:true});
-  window.addEventListener('load', setCurrent, {passive:true});
-
-  // Smooth click scroll
-  navLinks.forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      const href = a.getAttribute('href');
-      if(href && href.startsWith('#')){
+  openBtns.forEach(btn => {
+    if(btn) {
+      btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const el = document.querySelector(href);
-        if(el){
-          el.scrollIntoView({behavior:'smooth', block:'start'});
-          history.replaceState(null,'',href);
-          setCurrent();
-        }
-      }
-    });
+        modal.classList.add('active');
+      });
+    }
   });
-})();
+
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modal.classList.remove('active');
+    }
+  });
 </script>
+
 </body>
 </html>
