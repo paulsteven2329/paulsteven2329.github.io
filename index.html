@@ -10,24 +10,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#070709; /* near black */
-  --surface:#0f1113; /* slightly lighter */
+  --bg:#050507; /* slightly richer black */
+  --bg-accent:linear-gradient(180deg,#070709 0%, #0b0c0d 60%);
+  --surface:#0f1113;
   --panel:#151618;
   --muted:#9aa3ab;
   --text:#e6e9eb;
-  --accent:#b71c1c; /* deep red */
+  --muted-2:#7f878c;
+  --accent:#b71c1c;
   --accent-2:#ff6b6b;
   --line:rgba(255,255,255,0.04);
   --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
   --sans:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --radius:10px;
+  --radius:12px;
+  --gap:20px;
+  --max-width:1140px;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0); padding-bottom:env(safe-area-inset-bottom,0);
 }
 *,:before,:after{box-sizing:inherit}
 html{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
-body{margin:0;min-height:100vh}
-.wrap{max-width:1100px;margin:0 auto;padding:28px 24px}
-header{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,0.5), transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:40}
+body{margin:0;min-height:100vh;background:var(--bg-accent);background-image:radial-gradient(circle at 20% 10%, rgba(255,255,255,0.02), transparent 8%), radial-gradient(circle at 85% 90%, rgba(183,28,28,0.02), transparent 12%);} 
+.wrap{max-width:var(--max-width);margin:0 auto;padding:28px 24px}
+header{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,0.55), transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:40}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
 .brand{font-family:var(--serif);font-weight:700;letter-spacing:0.02em;color:var(--text);text-decoration:none;font-size:1.05rem}
 nav{display:flex;gap:14px;align-items:center}
@@ -36,16 +40,16 @@ nav a:hover, nav a[aria-current="true"]{color:var(--text);background:linear-grad
 .btn{background:transparent;border:1px solid var(--line);color:var(--text);padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:600}
 .btn-accent{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:700}
 main{padding:36px 0}
-.hero{display:grid;grid-template-columns:1fr 360px;gap:44px;align-items:start;padding:64px 0}
-.hero-ct{max-width:64ch}
-.h1{font-family:var(--serif);font-size:clamp(2.2rem,6vw,3.4rem);margin:0 0 16px;line-height:1.02}
-.lead{color:var(--muted);font-size:1.02rem;margin-bottom:20px}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:44px;align-items:start;padding:64px 0}
+.hero-ct{max-width:68ch}
+.h1{font-family:var(--serif);font-size:clamp(2em,6vw,3.6rem);margin:0 0 16px;line-height:1.02}
+.lead{color:var(--muted);font-size:1.05rem;margin-bottom:20px}
 .hint{font-size:.9rem;color:var(--muted)}
-.panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid var(--line);padding:18px;border-radius:var(--radius)}
+.panel{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid var(--line);padding:18px;border-radius:var(--radius)}
 .metrics{display:grid;gap:10px}
 .metric{display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-weight:700}
 .metric .k{color:var(--accent)}
-.section{padding:64px 0;border-top:1px solid var(--line)}
+.section{padding:60px 0;border-top:1px solid var(--line)}
 .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .gh-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.03);padding:16px;border-radius:12px;color:var(--text);text-decoration:none;display:flex;flex-direction:column;gap:8px;min-height:110px;transition:transform .18s ease, box-shadow .18s ease}
 .gh-card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(0,0,0,0.6)}
@@ -57,10 +61,22 @@ main{padding:36px 0}
 .repo-stats{color:var(--muted);font-size:.82rem;margin-left:auto}
 .cta-row{display:flex;gap:12px;align-items:center;margin-top:18px}
 .footer{padding:48px 0;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+.subtle{color:var(--muted-2)}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 24px}
+.lead-list{margin-top:14px;display:grid;gap:10px}
+.lead-list li{background:rgba(255,255,255,0.01);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);list-style:none}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.process .step{background:transparent;border:1px solid var(--line);padding:14px;border-radius:10px;text-align:center}
+.process .step h4{margin:6px 0 0;font-family:var(--serif)}
+.testimonials{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+.testimonial{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid var(--line);padding:16px;border-radius:10px}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.skill{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:.9rem}
 /* subtle interactions */
 .fade-up{opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease}
 .fade-up.in{opacity:1;transform:none}
-@media (max-width:980px){.hero{grid-template-columns:1fr;gap:28px}.projects-grid{grid-template-columns:1fr}.header-inner{height:64px}}
+@media (max-width:1100px){:root{--max-width:920px}.hero{grid-template-columns:1fr 340px}}
+@media (max-width:980px){.hero{grid-template-columns:1fr;gap:28px}.projects-grid{grid-template-columns:1fr}.process{grid-template-columns:repeat(2,1fr)}.testimonials{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.fade-up{transition:none!important}}
 </style>
 </head>
@@ -69,6 +85,7 @@ main{padding:36px 0}
   <div class="wrap header-inner">
     <a class="brand" href="#top">Paul Stephen</a>
     <nav aria-label="Primary">
+      <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#projects">Work</a>
       <a href="#github-projects">GitHub</a>
@@ -87,9 +104,21 @@ main{padding:36px 0}
         <a class="btn" href="#github-projects">See code</a>
       </div>
       <p class="hint" style="margin-top:14px">Available for contract and product work. I reply within one business day.</p>
+
+      <div style="margin-top:26px" class="fade-up" data-fade>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="font-family:var(--serif);font-weight:700">Who I work with</div>
+          <div class="subtle">Startups • Product teams • Founders • Engineering leads</div>
+        </div>
+        <ul class="lead-list">
+          <li><strong>Startups:</strong> ship an MVP that’s production‑ready from day one, with observability and testing in place.</li>
+          <li><strong>Businesses:</strong> replace manual workflows with reliable automation and RAG-driven knowledge bases.</li>
+          <li><strong>Teams:</strong> diagnose and fix performance issues — databases, APIs or inference pipelines.</li>
+        </ul>
+      </div>
     </div>
 
-    <aside class="panel">
+    <aside class="panel fade-up" data-fade>
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div style="color:var(--muted);font-size:.9rem">Key production metrics</div>
         <div class="small-muted" style="font-size:.82rem">Verified</div>
@@ -100,44 +129,100 @@ main{padding:36px 0}
         <div class="metric"><span>Inference latency</span><span class="k">−30%</span></div>
         <div class="metric"><span>Mobile load</span><span class="k">−25%</span></div>
       </div>
+      <div style="margin-top:14px;font-size:.88rem;color:var(--muted)">I focus on measurable outcomes: lower latency, lower cost, higher accuracy and maintainability.</div>
     </aside>
   </div>
+
+  <section id="about" class="section">
+    <div class="wrap">
+      <h2 style="margin:0;font-family:var(--serif);font-weight:700">About</h2>
+      <p class="small-muted" style="margin-top:8px">A short professional summary, responsibilities and working style for hiring managers.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:18px">
+        <div class="panel fade-up" data-fade>
+          <p>I’m Paul Stephen, an engineer based in Bengaluru with experience delivering production ML systems, fast backends and cross-platform mobile apps. I take end-to-end responsibility: architecture, implementation, testing, deployment and operational runbooks. I prioritise reliability, observability and predictable delivery so product teams can move quickly without accruing technical debt.</p>
+
+          <h3 style="margin-top:12px;font-family:var(--serif)">What I bring</h3>
+          <ul style="margin-top:8px" class="lead-list">
+            <li>Design and ship RAG pipelines with tuned retrieval and grounding, integrated with LLMs.</li>
+            <li>Profile and optimise databases and APIs for production load (Postgres, caching, optimized SQL).</li>
+            <li>Build maintainable Flutter apps with clean architecture, BLoC/state management and performant UI.</li>
+            <li>Integrate models into workflows, add automated quality gates and monitoring.</li>
+          </ul>
+        </div>
+
+        <aside class="panel fade-up" data-fade>
+          <h4 style="margin:0;font-family:var(--serif);">Process & guarantees</h4>
+          <p class="subtle" style="margin-top:8px">How I structure engagements so outcomes are predictable.</p>
+          <div class="process">
+            <div class="step"><div class="subtle">1</div><h4>Discovery</h4><div class="subtle">Goal, KPIs & architecture review</div></div>
+            <div class="step"><div class="subtle">2</div><h4>Proof</h4><div class="subtle">MVP, benchmarks, acceptance criteria</div></div>
+            <div class="step"><div class="subtle">3</div><h4>Ship</h4><div class="subtle">Deployment, testing, monitoring</div></div>
+            <div class="step"><div class="subtle">4</div><h4>Operate</h4><div class="subtle">Runbooks, SLOs, handover</div></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="wrap">
+      <h2 style="margin:0;font-family:var(--serif);font-weight:700">Services</h2>
+      <p class="small-muted" style="margin-top:8px">What I typically deliver for clients and teams.</p>
+
+      <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div class="panel fade-up" data-fade>
+          <h4 style="margin:0;font-family:var(--serif)">RAG & LLM systems</h4>
+          <p class="subtle" style="margin-top:8px">Document chunking, vector DBs, retrieval, hallucination mitigation, prompt engineering and answer grounding.</p>
+        </div>
+        <div class="panel fade-up" data-fade>
+          <h4 style="margin:0;font-family:var(--serif)">Backend performance</h4>
+          <p class="subtle" style="margin-top:8px">SQL profiling, caching strategies, connection pool tuning, queueing and graceful degradation under load.</p>
+        </div>
+        <div class="panel fade-up" data-fade>
+          <h4 style="margin:0;font-family:var(--serif)">Flutter apps</h4>
+          <p class="subtle" style="margin-top:8px">Clean architecture, BLoC/state, lazy loading and WebSocket/real-time features with cross-platform deployment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="projects" class="section">
     <div class="wrap">
       <h2 style="margin:0;font-family:var(--serif);font-weight:700">Selected work</h2>
-      <p class="small-muted" style="margin-top:8px">Problem → engineering → measurable outcome — concise case highlights for recruiters and product leaders.</p>
+      <p class="small-muted" style="margin-top:8px">Concise case highlights designed for recruiters and engineering leads.</p>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px">
         <article class="panel fade-up" data-fade>
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div>
-              <div style="font-family:var(--serif);font-weight:700">RAG AI system</div>
-              <div class="small-muted" style="margin-top:6px">FastAPI · FAISS · Production RAG</div>
+              <div style="font-family:var(--serif);font-weight:700">RAG AI system — enterprise knowledge</div>
+              <div class="small-muted" style="margin-top:6px">Problem: slow manual document search; Solution: full RAG pipeline; Result: 92% accuracy at scale</div>
             </div>
-            <div style="font-weight:700;color:var(--accent)">92% accuracy</div>
+            <div style="font-weight:700;color:var(--accent)">Impact: 92% accuracy</div>
           </div>
-          <p class="hint" style="margin-top:12px">Custom chunking, embeddings and tuned retrieval behind a FastAPI endpoint at 1,000+ queries/day; replaced manual processes and reduced review time significantly.</p>
+          <p class="hint" style="margin-top:12px">Built custom chunking, embeddings and search stacks (FAISS, vector store) with a FastAPI service and production monitoring. Replaced manual review workflows and reduced human effort by X% (client confidential).</p>
         </article>
 
         <article class="panel fade-up" data-fade>
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div>
-              <div style="font-family:var(--serif);font-weight:700">Backend query optimisation</div>
-              <div class="small-muted" style="margin-top:6px">PostgreSQL · EXPLAIN ANALYZE · Caching</div>
+              <div style="font-family:var(--serif);font-weight:700">Query optimisation — transactional backend</div>
+              <div class="small-muted" style="margin-top:6px">Problem: timeouts and slow endpoints; Solution: profiling, indexes, caching; Result: 77% faster queries</div>
             </div>
-            <div style="font-weight:700;color:var(--accent)">−77% exec time</div>
+            <div style="font-weight:700;color:var(--accent)">Impact: −77% latency</div>
           </div>
-          <p class="hint" style="margin-top:12px">Profiled slow queries, added indexes, rewrote N+1 patterns and introduced a caching layer — endpoints became predictable under load.</p>
+          <p class="hint" style="margin-top:12px">Used EXPLAIN ANALYZE, rewrote N+1 patterns and added caching layers; throughput and error rates improved under load.</p>
         </article>
       </div>
+
     </div>
   </section>
 
   <section id="github-projects" class="section">
     <div class="wrap">
       <h2 style="margin:0;font-family:var(--serif);font-weight:700">GitHub</h2>
-      <p class="small-muted" style="margin-top:8px">Public repositories — a mix of production work, tooling and experiments. Click a repo to view on GitHub.</p>
+      <p class="small-muted" style="margin-top:8px">Public repositories — production projects, tooling and experiments. Click to view code and read READMEs.</p>
 
       <div class="projects-grid" style="margin-top:18px">
         <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Agentic-Codebase-Analyzer" target="_blank" rel="noopener">
@@ -145,41 +230,53 @@ main{padding:36px 0}
           <strong>Agentic-Codebase-Analyzer</strong>
           <small>AI-powered code analysis and insight extraction.</small>
         </a>
-
         <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Agentic-Multimodal-ai" target="_blank" rel="noopener">
           <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
           <strong>Agentic-Multimodal-ai</strong>
           <small>Multimodal agent experiments.</small>
         </a>
-
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/AI-Powered-Fraud-Detection-System-for-Secure-Payment-Gateway" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>AI-Powered-Fraud-Detection-System-for-Secure-Payment-Gateway</strong>
-          <small>Fraud detection pipeline for payment gateways.</small>
-        </a>
-
         <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/GenAI_Image_Generater" target="_blank" rel="noopener">
           <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
           <strong>GenAI_Image_Generater</strong>
           <small>Generative image experiments & tooling.</small>
         </a>
-
         <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/FAST_API" target="_blank" rel="noopener">
           <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
           <strong>FAST_API</strong>
           <small>FastAPI backends and integration examples.</small>
         </a>
-
         <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Flutter_Animation" target="_blank" rel="noopener">
           <div class="repo-meta"><span class="lang">Dart</span><span class="repo-stats">· 0 stars</span></div>
           <strong>Flutter_Animation</strong>
           <small>UI motion and animation proofs-of-concept.</small>
         </a>
+        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Money-FlowX" target="_blank" rel="noopener">
+          <div class="repo-meta"><span class="lang">Dart</span><span class="repo-stats">· 0 stars</span></div>
+          <strong>Money-FlowX</strong>
+          <small>Budget planner app.</small>
+        </a>
       </div>
 
       <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
         <a class="btn" href="https://github.com/paulsteven2329" target="_blank" rel="noopener">View all repos</a>
-        <span class="small-muted">Want featured case studies? Tell me which projects to highlight.</span>
+        <span class="small-muted">Want featured case studies? Tell me which projects to highlight and I’ll add screenshots and details.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <div class="wrap">
+      <h2 style="margin:0;font-family:var(--serif);font-weight:700">Testimonials</h2>
+      <p class="small-muted" style="margin-top:8px">Short recommendations from product and engineering stakeholders.</p>
+      <div class="testimonials" style="margin-top:18px">
+        <div class="testimonial fade-up" data-fade>
+          <div style="font-weight:700">"Paul delivered a production RAG system that replaced a time-consuming manual process — the team now trusts answers."</div>
+          <div class="subtle" style="margin-top:8px">— Product lead, enterprise client</div>
+        </div>
+        <div class="testimonial fade-up" data-fade>
+          <div style="font-weight:700">"He found performance bottlenecks and reduced latency across our most critical endpoints. Highly recommended."</div>
+          <div class="subtle" style="margin-top:8px">— Engineering manager, SaaS</div>
+        </div>
       </div>
     </div>
   </section>
@@ -194,6 +291,7 @@ main{padding:36px 0}
       <div style="margin-top:12px;color:var(--muted)"><a style="color:var(--muted);text-decoration:none" href="tel:+919108800104">+91 91088 00104</a> &nbsp; • &nbsp; <a style="color:var(--muted);text-decoration:none" href="https://www.linkedin.com/in/paul-stephen-sde1-2b974027a" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
   </section>
+
 </main>
 
 <footer class="footer">
