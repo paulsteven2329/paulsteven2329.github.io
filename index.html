@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Paul Stephen | AI Systems & Backend Engineer</title>
+<meta name="description" content="Freelance engineer building RAG systems, fast backends and Flutter apps that run in production.">
+<style>
+:root{
+  --bg:#F5F7F9;--surface:#FFFFFF;--text:#14212B;--muted:#55656F;--accent:#0A6F7A;--accent-ink:#FFFFFF;--line:#D6DEE3;--panel:#E9EFF2;--good:#0A7A4B;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E161C;--surface:#152028;--text:#E6EDF1;--muted:#97A8B3;--accent:#52C4D0;--accent-ink:#06242A;--line:#26343E;--panel:#101B22;--good:#5CD9A0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E161C;--surface:#152028;--text:#E6EDF1;--muted:#97A8B3;--accent:#52C4D0;--accent-ink:#06242A;--line:#26343E;--panel:#101B22;--good:#5CD9A0;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.15;margin:0}
+h2{font-size:clamp(1.7rem,3.2vw,2.2rem);letter-spacing:-.01em}
+h3{font-size:1.25rem}
+p{margin:0 0 1em;max-width:68ch}
+section{padding:72px 0;border-top:1px solid var(--line)}
+.lead{color:var(--muted);font-size:1.075rem;margin-top:12px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.1rem;color:var(--text);text-decoration:none}
+nav{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+nav a{color:var(--muted);text-decoration:none;font-size:.92rem;padding:8px 10px;border-radius:6px}
+nav a:hover{color:var(--text);background:var(--panel)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;text-decoration:none;padding:12px 20px;border-radius:6px;border:1px solid var(--accent)}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--accent);filter:none}
+
+/* hero */
+.hero{border-top:0;padding:64px 0 72px}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+h1{font-size:clamp(2.2rem,5.2vw,3.6rem);letter-spacing:-.02em}
+.hero .sub{font-size:1.15rem;color:var(--muted);margin:20px 0 28px;max-width:52ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.avail{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;color:var(--muted);margin-bottom:20px}
+.avail i{width:9px;height:9px;border-radius:50%;background:var(--good);display:block}
+
+/* benchmark panel: the one memorable element */
+.bench{background:var(--panel);border:1px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:.82rem;overflow:hidden}
+.bench .top{padding:10px 16px;border-bottom:1px solid var(--line);color:var(--muted)}
+.bench table{width:100%;border-collapse:collapse}
+.bench th,.bench td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line);font-weight:400;vertical-align:baseline}
+.bench tr:last-child td,.bench tr:last-child th{border-bottom:0}
+.bench th{color:var(--muted)}
+.bench td{text-align:right;color:var(--text);font-weight:700;white-space:nowrap}
+.bench td b{color:var(--accent)}
+
+/* services */
+.rows{margin-top:36px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:260px 1fr;gap:32px;padding:28px 0;border-bottom:1px solid var(--line)}
+.row p{margin-bottom:.6em}
+.row .fix{color:var(--muted);font-size:.95rem}
+.row strong{color:var(--text)}
+
+/* projects */
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-top:20px;padding:28px}
+.proj-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.metric{font-family:var(--serif);font-weight:700;color:var(--accent);font-size:1.15rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 20px;padding:0;list-style:none}
+.tags li{font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:2px 8px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cols h4{margin:0 0 6px;font-size:.95rem}
+.cols p{font-size:.95rem;color:var(--muted);margin:0}
+.cols .res p{color:var(--text)}
+
+/* why + stack */
+.why{display:grid;grid-template-columns:repeat(2,1fr);gap:32px 48px;margin-top:36px}
+.why h3{font-size:1.1rem;margin-bottom:6px}
+.why p{color:var(--muted);margin:0}
+.for{margin:28px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.for li{padding-left:20px;position:relative;max-width:70ch}
+.for li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:2px;background:var(--accent)}
+.stack{margin-top:32px;border-top:1px solid var(--line)}
+.stack div{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:14px 0;border-bottom:1px solid var(--line)}
+.stack dt{font-weight:600}
+.stack dd{margin:0;color:var(--muted)}
+
+/* contact */
+.contact{background:var(--surface)}
+.mail{font-family:var(--serif);font-size:clamp(1.4rem,4vw,2.3rem);font-weight:700;word-break:break-all;color:var(--accent);text-decoration:none}
+.mail:hover{text-decoration:underline}
+.links{display:flex;gap:24px;flex-wrap:wrap;margin:28px 0 20px}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .row{grid-template-columns:1fr;gap:8px}
+  .cols{grid-template-columns:1fr;gap:16px}
+  .why{grid-template-columns:1fr}
+  .stack div{grid-template-columns:1fr;gap:2px}
+  nav a:nth-child(n+4){display:none}
+  section{padding:56px 0}
+  .proj{padding:22px 18px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top">Paul Stephen</a>
+    <nav aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#approach">Approach</a>
+      <a href="#stack">Tech stack</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="avail"><i aria-hidden="true"></i>Available for freelance projects</p>
+      <h1>AI systems and backends that run reliably in production.</h1>
+      <p class="sub">I'm Paul Stephen, an engineer in Bengaluru. I build document search with RAG, speed up slow APIs, and ship Flutter apps for startups and businesses that need measurable results.</p>
+      <div class="cta">
+        <a class="btn" href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry">Email me</a>
+        <a class="btn ghost" href="#projects">See projects</a>
+      </div>
+    </div>
+    <aside class="bench" aria-label="Results from production work">
+      <div class="top">results from production work</div>
+      <table>
+        <tr><th scope="row">RAG answer accuracy</th><td><b>92%</b></td></tr>
+        <tr><th scope="row">Query execution time</th><td><b>&minus;77%</b></td></tr>
+        <tr><th scope="row">Inference latency</th><td><b>&minus;30%</b></td></tr>
+        <tr><th scope="row">Mobile app load time</th><td><b>&minus;25%</b></td></tr>
+        <tr><th scope="row">Daily transactions handled</th><td><b>1,000+</b></td></tr>
+        <tr><th scope="row">Production systems shipped</th><td><b>20+</b></td></tr>
+      </table>
+    </aside>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2>What I can build for you</h2>
+    <p class="lead">Five areas where I take a problem from diagnosis to a system running in production.</p>
+    <div class="rows">
+      <div class="row">
+        <h3>AI and RAG systems</h3>
+        <div>
+          <p>Retrieval pipelines that let your team ask questions of its own documents, data and knowledge bases and get accurate, grounded answers.</p>
+          <p class="fix"><strong>Fixes:</strong> slow document search, expensive manual review, knowledge scattered across files.</p>
+        </div>
+      </div>
+      <div class="row">
+        <h3>Backend performance</h3>
+        <div>
+          <p>I find the cause of slow APIs and database bottlenecks and fix it, so response times stay steady as traffic grows.</p>
+          <p class="fix"><strong>Fixes:</strong> timeouts under load, slow queries, N+1 patterns, weak database design.</p>
+        </div>
+      </div>
+      <div class="row">
+        <h3>API development and architecture</h3>
+        <div>
+          <p>Clean, documented REST APIs and microservices that integrate well and that your team can extend without fear.</p>
+          <p class="fix"><strong>Fixes:</strong> fragile integrations, unmaintainable backends, tangled responsibilities.</p>
+        </div>
+      </div>
+      <div class="row">
+        <h3>Flutter mobile apps</h3>
+        <div>
+          <p>One codebase for iOS, Android and Web, with clean architecture, real-time data and polished UX.</p>
+          <p class="fix"><strong>Fixes:</strong> separate native codebases, sluggish apps, messy state management.</p>
+        </div>
+      </div>
+      <div class="row">
+        <h3>LLM integration and automation</h3>
+        <div>
+          <p>Language models wired into your existing workflows to automate repetitive work and produce structured output.</p>
+          <p class="fix"><strong>Fixes:</strong> manual processes that should be automated, high labor cost on repetitive tasks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Selected projects</h2>
+    <p class="lead">Each one started with a business problem and ended with a number.</p>
+
+    <article class="proj">
+      <div class="proj-head"><h3>RAG AI system</h3><span class="metric">92% answer accuracy</span></div>
+      <ul class="tags"><li>FastAPI</li><li>FAISS</li><li>LLMs</li><li>Semantic search</li><li>PostgreSQL</li></ul>
+      <div class="cols">
+        <div><h4>Problem</h4><p>Searching large collections of PDF and structured files was manual, slow and error-prone.</p></div>
+        <div><h4>What I built</h4><p>A full RAG pipeline: custom chunking, FAISS embeddings, semantic retrieval and LLM answer synthesis behind a FastAPI backend, tuned against real queries across document types.</p></div>
+        <div class="res"><h4>Result</h4><p>92% answer accuracy in production at 1,000+ queries a day, replacing manual document lookup.</p></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-head"><h3>Backend query optimization</h3><span class="metric">77% faster queries</span></div>
+      <ul class="tags"><li>PostgreSQL</li><li>FastAPI</li><li>Query optimization</li><li>Caching</li></ul>
+      <div class="cols">
+        <div><h4>Problem</h4><p>A transactional backend returned data-heavy endpoints in seconds and timed out under load.</p></div>
+        <div><h4>What I built</h4><p>Profiled every slow query with EXPLAIN ANALYZE, added missing indexes, rewrote N+1 patterns, added a caching layer and moved critical ORM calls to optimized SQL.</p></div>
+        <div class="res"><h4>Result</h4><p>77% less query execution time. Endpoints that timed out now respond within target latency and have held as traffic scaled.</p></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-head"><h3>GenAI image pipeline</h3><span class="metric">30% faster inference</span></div>
+      <ul class="tags"><li>PyTorch</li><li>ONNX</li><li>HuggingFace</li><li>Model optimization</li><li>Google Cloud</li></ul>
+      <div class="cols">
+        <div><h4>Problem</h4><p>A generative image pipeline had high latency, poor GPU use and growing compute costs.</p></div>
+        <div><h4>What I built</h4><p>INT8 quantization, dynamic batching and ONNX export for faster runtime, plus GPU memory profiling, parallel pipeline stages and removal of redundant preprocessing.</p></div>
+        <div class="res"><h4>Result</h4><p>30% lower inference latency and proportionally lower compute cost, with no loss in output quality.</p></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-head"><h3>Flutter finance app</h3><span class="metric">25% faster load time</span></div>
+      <ul class="tags"><li>Flutter</li><li>Dart</li><li>BLoC</li><li>Clean architecture</li><li>WebSockets</li></ul>
+      <div class="cols">
+        <div><h4>Problem</h4><p>A real-time financial analytics app started slowly, managed state poorly and was too fragile to extend.</p></div>
+        <div><h4>What I built</h4><p>Re-architected with BLoC for predictable state, added lazy loading and widget-level caching, removed needless rebuilds and replaced polling with WebSockets.</p></div>
+        <div class="res"><h4>Result</h4><p>25% faster loads, sub-second live updates and a modular codebase shipped to iOS, Android and Web from one repo.</p></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="wrap">
+    <h2>How I work</h2>
+    <div class="why">
+      <div><h3>Production first</h3><p>I build systems meant to run in the real world, not demos.</p></div>
+      <div><h3>Performance from the start</h3><p>Speed and efficiency are design inputs, not a cleanup task at the end.</p></div>
+      <div><h3>End-to-end ownership</h3><p>I take responsibility for the whole solution, from architecture to deployment.</p></div>
+      <div><h3>Clear communication</h3><p>You always know the status, the trade-offs and the timeline.</p></div>
+      <div><h3>Fast iteration</h3><p>I move quickly without cutting corners, and I ship things that work.</p></div>
+      <div><h3>Results over output</h3><p>I care about the business outcome, not the number of lines delivered.</p></div>
+    </div>
+    <h3 style="margin-top:48px">Who I can help</h3>
+    <ul class="for">
+      <li><strong>Startups</strong> building MVPs that need to be production-ready from day one.</li>
+      <li><strong>Businesses</strong> with manual workflows that should be automated.</li>
+      <li><strong>Teams</strong> whose backends are slow and need expert diagnosis.</li>
+      <li><strong>Founders</strong> exploring how to bring AI into their product in a meaningful way.</li>
+      <li><strong>Companies</strong> that need a reliable Flutter app on every platform.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <h2>Tech stack</h2>
+    <dl class="stack">
+      <div><dt>AI / ML</dt><dd>RAG systems, LLM integration, semantic search, prompt engineering, PyTorch, HuggingFace, TensorFlow, FAISS, ONNX</dd></div>
+      <div><dt>Backend</dt><dd>FastAPI, NestJS, Node.js, Django, REST APIs, microservices</dd></div>
+      <div><dt>Databases</dt><dd>PostgreSQL, MongoDB, vector databases, FAISS</dd></div>
+      <div><dt>Mobile</dt><dd>Flutter, Dart, BLoC, clean architecture for iOS, Android and Web</dd></div>
+      <div><dt>Languages</dt><dd>Python, Dart, TypeScript, JavaScript</dd></div>
+      <div><dt>DevOps and cloud</dt><dd>Docker, Google Cloud, CI/CD, Git</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Tell me what you're building</h2>
+    <p class="lead">If a system needs to be faster, smarter or actually built, I'm taking on freelance projects. I reply within 24 hours.</p>
+    <p style="margin-top:28px"><a class="mail" href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry">paulsteven2930@gmail.com</a></p>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/paul-stephen-sde1-2b974027a" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/paulsteven2329" rel="noopener">GitHub</a>
+      <a href="tel:+919108800104">+91 91088 00104</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Paul Stephen, Bengaluru, India</div>
+</footer>
+</body>
+</html>
