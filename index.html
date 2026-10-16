@@ -1,282 +1,524 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Paul Stephen | Systems Engineer</title>
+<title>Paul Stephen | Systems Engineer — Doom / Dark Knight Minimal Edition</title>
 <meta name="description" content="Paul Stephen — Production-first AI systems, backend engineering and Flutter apps.">
+
+<!-- Google Fonts: Cinzel for Dark Knight / Sovereign Serif, JetBrains Mono for Code/Metrics, Inter for body text -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          doom: {
+            bg: '#060807',
+            surface: '#0d1210',
+            panel: '#121a16',
+            border: '#1b2c24',
+            emerald: '#10b981',
+            glow: '#00ffaa',
+            gold: '#d4af37',
+            goldbright: '#f3e5ab',
+            text: '#e2e8f0',
+            muted: '#8ba398',
+            darkmuted: '#4a6358'
+          }
+        },
+        fontFamily: {
+          cinzel: ['Cinzel', 'serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+          sans: ['Inter', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
 <style>
-:root{
-  --bg:#050507; /* slightly richer black */
-  --bg-accent:linear-gradient(180deg,#070709 0%, #0b0c0d 60%);
-  --surface:#0f1113;
-  --panel:#151618;
-  --muted:#9aa3ab;
-  --text:#e6e9eb;
-  --muted-2:#7f878c;
-  --accent:#b71c1c;
-  --accent-2:#ff6b6b;
-  --line:rgba(255,255,255,0.04);
-  --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
-  --sans:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --radius:12px;
-  --gap:20px;
-  --max-width:1140px;
-  box-sizing:border-box; padding-top:env(safe-area-inset-top,0); padding-bottom:env(safe-area-inset-bottom,0);
-}
-*,:before,:after{box-sizing:inherit}
-html{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
-body{margin:0;min-height:100vh;background:var(--bg-accent);background-image:radial-gradient(circle at 20% 10%, rgba(255,255,255,0.02), transparent 8%), radial-gradient(circle at 85% 90%, rgba(183,28,28,0.02), transparent 12%);} 
-.wrap{max-width:var(--max-width);margin:0 auto;padding:28px 24px}
-header{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,0.55), transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:40}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
-.brand{font-family:var(--serif);font-weight:700;letter-spacing:0.02em;color:var(--text);text-decoration:none;font-size:1.05rem}
-nav{display:flex;gap:14px;align-items:center}
-nav a{color:var(--muted);text-decoration:none;font-size:.88rem;padding:8px;border-radius:8px;text-transform:uppercase;letter-spacing:0.08em;transition:color .18s,background .18s}
-nav a:hover, nav a[aria-current="true"]{color:var(--text);background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent)}
-.btn{background:transparent;border:1px solid var(--line);color:var(--text);padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:600}
-.btn-accent{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:700}
-main{padding:36px 0}
-.hero{display:grid;grid-template-columns:1fr 380px;gap:44px;align-items:start;padding:64px 0}
-.hero-ct{max-width:68ch}
-.h1{font-family:var(--serif);font-size:clamp(2em,6vw,3.6rem);margin:0 0 16px;line-height:1.02}
-.lead{color:var(--muted);font-size:1.05rem;margin-bottom:20px}
-.hint{font-size:.9rem;color:var(--muted)}
-.panel{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid var(--line);padding:18px;border-radius:var(--radius)}
-.metrics{display:grid;gap:10px}
-.metric{display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-weight:700}
-.metric .k{color:var(--accent)}
-.section{padding:60px 0;border-top:1px solid var(--line)}
-.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.gh-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.03);padding:16px;border-radius:12px;color:var(--text);text-decoration:none;display:flex;flex-direction:column;gap:8px;min-height:110px;transition:transform .18s ease, box-shadow .18s ease}
-.gh-card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(0,0,0,0.6)}
-.gh-card:focus{outline:3px solid rgba(183,28,28,0.18);outline-offset:4px}
-.gh-card strong{font-family:var(--serif);font-size:1rem}
-.gh-card small{color:var(--muted);font-size:.88rem}
-.repo-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.lang{padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.02);font-size:.72rem;color:var(--muted)}
-.repo-stats{color:var(--muted);font-size:.82rem;margin-left:auto}
-.cta-row{display:flex;gap:12px;align-items:center;margin-top:18px}
-.footer{padding:48px 0;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
-.subtle{color:var(--muted-2)}
-.container{max-width:var(--max-width);margin:0 auto;padding:0 24px}
-.lead-list{margin-top:14px;display:grid;gap:10px}
-.lead-list li{background:rgba(255,255,255,0.01);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);list-style:none}
-.process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
-.process .step{background:transparent;border:1px solid var(--line);padding:14px;border-radius:10px;text-align:center}
-.process .step h4{margin:6px 0 0;font-family:var(--serif)}
-.testimonials{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
-.testimonial{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid var(--line);padding:16px;border-radius:10px}
-.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.skill{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:.9rem}
-/* subtle interactions */
-.fade-up{opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease}
-.fade-up.in{opacity:1;transform:none}
-@media (max-width:1100px){:root{--max-width:920px}.hero{grid-template-columns:1fr 340px}}
-@media (max-width:980px){.hero{grid-template-columns:1fr;gap:28px}.projects-grid{grid-template-columns:1fr}.process{grid-template-columns:repeat(2,1fr)}.testimonials{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}.fade-up{transition:none!important}}
+  :root {
+    --bg-dark: #060807;
+    --emerald: #10b981;
+    --emerald-glow: rgba(0, 255, 170, 0.15);
+    --gold: #d4af37;
+  }
+
+  body {
+    background-color: var(--bg-dark);
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+
+  /* Doom Armor Metallic Border & Clip Corner Aesthetics */
+  .armor-card {
+    background: linear-gradient(135deg, rgba(13, 18, 16, 0.95) 0%, rgba(18, 26, 22, 0.85) 100%);
+    border: 1px solid rgba(27, 44, 36, 0.8);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+
+  .armor-card:hover {
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 25px -5px rgba(0, 255, 170, 0.12), inset 0 0 15px rgba(16, 185, 129, 0.03);
+    transform: translateY(-2px);
+  }
+
+  /* Sharp chamfer corners for Latverian cyber-armor motif */
+  .chamfer-corner {
+    clip-path: polygon(
+      0 0, 
+      calc(100% - 12px) 0, 
+      100% 12px, 
+      100% 100%, 
+      12px 100%, 
+      0 calc(100% - 12px)
+    );
+  }
+
+  .gold-glow-text {
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+  }
+
+  .emerald-glow-text {
+    text-shadow: 0 0 12px rgba(0, 255, 170, 0.4);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #060807;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1b2c24;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+  }
+
+  /* Subtle Scanline Overlay */
+  .scanline-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0, 0, 0, 0.25) 50%,
+      rgba(0, 0, 0, 0.25)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  .fade-up.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 </head>
-<body>
-<header>
-  <div class="wrap header-inner">
-    <a class="brand" href="#top">Paul Stephen</a>
-    <nav aria-label="Primary">
-      <a href="#about">About</a>
-      <a href="#projects">Work</a>
-      <a href="#github-projects">GitHub</a>
-      <a href="#contact">Contact</a>
-      <a class="btn-accent" href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry">Hire me</a>
+<body class="min-h-screen text-doom-text antialiased selection:bg-doom-emerald selection:text-black relative">
+
+<!-- Background Scanlines -->
+<div class="fixed inset-0 scanline-overlay z-50 opacity-30"></div>
+
+<!-- HEADER / NAV -->
+<header class="sticky top-0 z-40 backdrop-blur-md bg-doom-bg/80 border-b border-doom-border/60">
+  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <!-- Brand Title -->
+    <a href="#top" class="group flex items-center gap-3 text-decoration-none">
+      <div class="w-8 h-8 rounded border border-doom-gold/40 flex items-center justify-center bg-doom-surface group-hover:border-doom-emerald transition-colors">
+        <span class="font-cinzel text-doom-gold group-hover:text-doom-glow font-bold text-lg">P</span>
+      </div>
+      <span class="font-cinzel font-bold tracking-widest text-lg text-slate-100 group-hover:text-doom-gold transition-colors uppercase">
+        Paul Stephen
+      </span>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="hidden md:flex items-center gap-1 font-mono text-xs tracking-wider" aria-label="Primary">
+      <a href="#about" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/About</a>
+      <a href="#projects" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/Work</a>
+      <a href="#github-projects" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/GitHub</a>
+      <a href="#contact" class="px-4 py-2 rounded text-doom-muted hover:text-doom-text hover:bg-doom-panel/60 transition-all uppercase">/Contact</a>
+      
+      <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="ml-4 px-5 py-2.5 rounded bg-gradient-to-r from-doom-emerald to-emerald-700 text-black font-bold uppercase font-mono tracking-wider hover:brightness-110 hover:shadow-[0_0_15px_rgba(0,255,170,0.4)] transition-all">
+        Hire Me
+      </a>
     </nav>
+
+    <!-- Mobile Button -->
+    <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="md:hidden px-4 py-2 rounded bg-doom-emerald text-black font-bold font-mono text-xs uppercase">
+      Hire
+    </a>
   </div>
 </header>
-<main id="top">
-  <div class="wrap hero">
-    <div class="hero-ct">
-      <h1 class="h1">Systems and backends that ship, perform and scale.</h1>
-      <p class="lead">Production-first engineering: RAG & LLM integrations, high‑performance backends and cross‑platform Flutter apps. Polished, reliable systems — with clear ownership, measurable impact and predictable delivery.</p>
-      <div class="cta-row">
-        <a class="btn-accent" href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry">Start a conversation</a>
-        <a class="btn" href="#github-projects">See code</a>
-      </div>
-      <p class="hint" style="margin-top:14px">Available for contract and product work. I reply within one business day.</p>
 
-      <div style="margin-top:26px" class="fade-up" data-fade>
-        <div style="display:flex;gap:12px;align-items:center">
-          <div style="font-family:var(--serif);font-weight:700">Who I work with</div>
-          <div class="subtle">Startups • Product teams • Founders • Engineering leads</div>
+<main id="top" class="max-w-6xl mx-auto px-6 pt-10 pb-20 space-y-24">
+
+  <!-- HERO SECTION -->
+  <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-8">
+    <div class="lg:col-span-8 space-y-8">
+      
+      <!-- Status Badge -->
+      <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded border border-doom-border bg-doom-surface/80 font-mono text-xs text-doom-emerald">
+        <span class="w-2 h-2 rounded-full bg-doom-glow animate-pulse"></span>
+        <span class="tracking-wider uppercase">Systems Architect • Production ML & Backends</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl font-black text-slate-100 leading-tight tracking-tight">
+        Systems & Backends That <span class="text-transparent bg-clip-text bg-gradient-to-r from-doom-goldbright via-doom-gold to-yellow-600 gold-glow-text">Ship, Perform</span> & Scale.
+      </h1>
+
+      <p class="text-slate-300 text-lg leading-relaxed max-w-2xl font-sans">
+        Production-first engineering: RAG & LLM integrations, high‑performance backends and cross‑platform Flutter apps. Polished, reliable systems — with clear ownership, measurable impact and predictable delivery.
+      </p>
+
+      <!-- CTA Action Buttons -->
+      <div class="flex flex-wrap items-center gap-4 pt-2">
+        <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="px-6 py-3.5 rounded bg-gradient-to-r from-doom-emerald to-emerald-600 text-black font-bold font-mono text-sm tracking-wider uppercase hover:brightness-110 hover:shadow-[0_0_20px_rgba(0,255,170,0.5)] transition-all">
+          Start a Conversation
+        </a>
+        <a href="#github-projects" class="px-6 py-3.5 rounded border border-doom-border bg-doom-surface hover:border-doom-emerald/50 text-doom-text font-mono text-sm tracking-wider uppercase transition-all">
+          See Code &rarr;
+        </a>
+      </div>
+
+      <p class="text-xs font-mono text-doom-muted flex items-center gap-2 pt-1">
+        <span class="text-doom-emerald">▪</span> Available for contract and product work. I reply within one business day.
+      </p>
+
+      <!-- Target Audience / Who I work with -->
+      <div class="pt-8 border-t border-doom-border/50 fade-up" data-fade>
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <h3 class="font-cinzel font-bold text-doom-gold text-base uppercase tracking-wider">Who I Work With</h3>
+          <span class="text-xs font-mono text-doom-muted uppercase">Startups • Product Teams • Founders • Engineering Leads</span>
         </div>
-        <ul class="lead-list">
-          <li><strong>Startups:</strong> ship an MVP that’s production‑ready from day one, with observability and testing in place.</li>
-          <li><strong>Businesses:</strong> replace manual workflows with reliable automation and RAG-driven knowledge bases.</li>
-          <li><strong>Teams:</strong> diagnose and fix performance issues — databases, APIs or inference pipelines.</li>
+
+        <ul class="grid gap-3 font-sans text-sm text-doom-text">
+          <li class="p-3.5 rounded bg-doom-surface/60 border border-doom-border/60 hover:border-doom-emerald/40 transition-colors">
+            <strong class="text-slate-100 font-semibold">Startups:</strong> Ship an MVP that’s production‑ready from day one, with observability and testing in place.
+          </li>
+          <li class="p-3.5 rounded bg-doom-surface/60 border border-doom-border/60 hover:border-doom-emerald/40 transition-colors">
+            <strong class="text-slate-100 font-semibold">Businesses:</strong> Replace manual workflows with reliable automation and RAG-driven knowledge bases.
+          </li>
+          <li class="p-3.5 rounded bg-doom-surface/60 border border-doom-border/60 hover:border-doom-emerald/40 transition-colors">
+            <strong class="text-slate-100 font-semibold">Teams:</strong> Diagnose and fix performance issues — databases, APIs or inference pipelines.
+          </li>
         </ul>
       </div>
+
     </div>
 
-    <aside class="panel fade-up" data-fade>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="color:var(--muted);font-size:.9rem">Key production metrics</div>
-        <div class="small-muted" style="font-size:.82rem">Verified</div>
+    <!-- METRICS PANEL (SIDEBAR) -->
+    <aside class="lg:col-span-4 armor-card chamfer-corner p-6 space-y-6 fade-up" data-fade>
+      <div class="flex items-center justify-between pb-3 border-b border-doom-border">
+        <span class="font-cinzel font-bold text-doom-gold uppercase tracking-wider text-sm">Key Metrics</span>
+        <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-doom-emerald/10 text-doom-emerald border border-doom-emerald/30">Verified</span>
       </div>
-      <div class="metrics" style="margin-top:12px">
-        <div class="metric"><span>RAG answer accuracy</span><span class="k">92%</span></div>
-        <div class="metric"><span>Query execution</span><span class="k">−77%</span></div>
-        <div class="metric"><span>Inference latency</span><span class="k">−30%</span></div>
-        <div class="metric"><span>Mobile load</span><span class="k">−25%</span></div>
+
+      <div class="space-y-4 font-mono">
+        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
+          <span class="text-xs text-doom-muted uppercase">RAG Answer Accuracy</span>
+          <span class="text-lg font-bold text-doom-glow emerald-glow-text">92%</span>
+        </div>
+        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
+          <span class="text-xs text-doom-muted uppercase">Query Execution</span>
+          <span class="text-lg font-bold text-doom-gold gold-glow-text">−77%</span>
+        </div>
+        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
+          <span class="text-xs text-doom-muted uppercase">Inference Latency</span>
+          <span class="text-lg font-bold text-doom-gold gold-glow-text">−30%</span>
+        </div>
+        <div class="flex items-center justify-between p-3 rounded bg-doom-bg/60 border border-doom-border/50">
+          <span class="text-xs text-doom-muted uppercase">Mobile Load</span>
+          <span class="text-lg font-bold text-doom-gold gold-glow-text">−25%</span>
+        </div>
       </div>
-      <div style="margin-top:14px;font-size:.88rem;color:var(--muted)">I focus on measurable outcomes: lower latency, lower cost, higher accuracy and maintainability.</div>
+
+      <p class="text-xs text-doom-muted leading-relaxed font-sans pt-2 border-t border-doom-border/50">
+        I focus on measurable outcomes: lower latency, lower cost, higher accuracy and maintainability.
+      </p>
     </aside>
-  </div>
+  </section>
 
-  <section id="about" class="section">
-    <div class="wrap">
-      <h2 style="margin:0;font-family:var(--serif);font-weight:700">About</h2>
-      <p class="small-muted" style="margin-top:8px">A short professional summary, responsibilities and working style for hiring managers.</p>
+  <!-- ABOUT SECTION -->
+  <section id="about" class="pt-10 border-t border-doom-border/60">
+    <div class="space-y-2 mb-8">
+      <h2 class="font-cinzel text-3xl font-bold text-slate-100 tracking-wide uppercase">About</h2>
+      <p class="text-sm font-mono text-doom-muted">A short professional summary, responsibilities and working style for hiring managers.</p>
+    </div>
 
-      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:18px">
-        <div class="panel fade-up" data-fade>
-          <p>I’m Paul Stephen, an engineer based in Bengaluru with experience delivering production ML systems, fast backends and cross-platform mobile apps. I take end-to-end responsibility: architecture, implementation, testing, deployment and operational runbooks. I prioritise reliability, observability and predictable delivery so product teams can move quickly without accruing technical debt.</p>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Main Bio -->
+      <div class="lg:col-span-7 armor-card p-6 space-y-6 fade-up" data-fade>
+        <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-sans">
+          I’m <strong class="text-slate-100 font-semibold">Paul Stephen</strong>, an engineer based in Bengaluru with experience delivering production ML systems, fast backends and cross-platform mobile apps. I take end-to-end responsibility: architecture, implementation, testing, deployment and operational runbooks. I prioritise reliability, observability and predictable delivery so product teams can move quickly without accruing technical debt.
+        </p>
 
-          <h3 style="margin-top:12px;font-family:var(--serif)">What I bring</h3>
-          <ul style="margin-top:8px" class="lead-list">
-            <li>Design and ship RAG pipelines with tuned retrieval and grounding, integrated with LLMs.</li>
-            <li>Profile and optimise databases and APIs for production load (Postgres, caching, optimized SQL).</li>
-            <li>Build maintainable Flutter apps with clean architecture, BLoC/state management and performant UI.</li>
-            <li>Integrate models into workflows, add automated quality gates and monitoring.</li>
+        <div class="space-y-3 pt-2">
+          <h3 class="font-cinzel text-doom-gold font-bold uppercase text-sm tracking-wider">What I Bring</h3>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-300 font-sans">
+            <li class="flex items-start gap-2.5">
+              <span class="text-doom-emerald mt-1">❖</span>
+              <span>Design and ship RAG pipelines with tuned retrieval and grounding, integrated with LLMs.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-doom-emerald mt-1">❖</span>
+              <span>Profile and optimise databases and APIs for production load (Postgres, caching, optimized SQL).</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-doom-emerald mt-1">❖</span>
+              <span>Build maintainable Flutter apps with clean architecture, BLoC/state management and performant UI.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-doom-emerald mt-1">❖</span>
+              <span>Integrate models into workflows, add automated quality gates and monitoring.</span>
+            </li>
           </ul>
         </div>
-
-        <aside class="panel fade-up" data-fade>
-          <h4 style="margin:0;font-family:var(--serif);">Process & guarantees</h4>
-          <p class="subtle" style="margin-top:8px">How I structure engagements so outcomes are predictable.</p>
-          <div class="process">
-            <div class="step"><div class="subtle">1</div><h4>Discovery</h4><div class="subtle">Goal, KPIs & architecture review</div></div>
-            <div class="step"><div class="subtle">2</div><h4>Proof</h4><div class="subtle">MVP, benchmarks, acceptance criteria</div></div>
-            <div class="step"><div class="subtle">3</div><h4>Ship</h4><div class="subtle">Deployment, testing, monitoring</div></div>
-            <div class="step"><div class="subtle">4</div><h4>Operate</h4><div class="subtle">Runbooks, SLOs, handover</div></div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="section">
-    <div class="wrap">
-      <h2 style="margin:0;font-family:var(--serif);font-weight:700">Selected work</h2>
-      <p class="small-muted" style="margin-top:8px">Concise case highlights designed for recruiters and engineering leads.</p>
-
-      <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px">
-        <article class="panel fade-up" data-fade>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div style="font-family:var(--serif);font-weight:700">RAG AI system — enterprise knowledge</div>
-              <div class="small-muted" style="margin-top:6px">Problem: slow manual document search; Solution: full RAG pipeline; Result: 92% accuracy at scale</div>
-            </div>
-            <div style="font-weight:700;color:var(--accent)">Impact: 92% accuracy</div>
-          </div>
-          <p class="hint" style="margin-top:12px">Built custom chunking, embeddings and search stacks (FAISS, vector store) with a FastAPI service and production monitoring. Replaced manual review workflows and reduced human effort by X% (client confidential).</p>
-        </article>
-
-        <article class="panel fade-up" data-fade>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div style="font-family:var(--serif);font-weight:700">Query optimisation — transactional backend</div>
-              <div class="small-muted" style="margin-top:6px">Problem: timeouts and slow endpoints; Solution: profiling, indexes, caching; Result: 77% faster queries</div>
-            </div>
-            <div style="font-weight:700;color:var(--accent)">Impact: −77% latency</div>
-          </div>
-          <p class="hint" style="margin-top:12px">Used EXPLAIN ANALYZE, rewrote N+1 patterns and added caching layers; throughput and error rates improved under load.</p>
-        </article>
       </div>
 
-    </div>
-  </section>
-
-  <section id="github-projects" class="section">
-    <div class="wrap">
-      <h2 style="margin:0;font-family:var(--serif);font-weight:700">GitHub</h2>
-      <p class="small-muted" style="margin-top:8px">Public repositories — production projects, tooling and experiments. Click to view code and read READMEs.</p>
-
-      <div class="projects-grid" style="margin-top:18px">
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Agentic-Codebase-Analyzer" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>Agentic-Codebase-Analyzer</strong>
-          <small>AI-powered code analysis and insight extraction.</small>
-        </a>
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Agentic-Multimodal-ai" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>Agentic-Multimodal-ai</strong>
-          <small>Multimodal agent experiments.</small>
-        </a>
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/GenAI_Image_Generater" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>GenAI_Image_Generater</strong>
-          <small>Generative image experiments & tooling.</small>
-        </a>
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/FAST_API" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Python</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>FAST_API</strong>
-          <small>FastAPI backends and integration examples.</small>
-        </a>
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Flutter_Animation" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Dart</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>Flutter_Animation</strong>
-          <small>UI motion and animation proofs-of-concept.</small>
-        </a>
-        <a class="gh-card fade-up" data-fade href="https://github.com/paulsteven2329/Money-FlowX" target="_blank" rel="noopener">
-          <div class="repo-meta"><span class="lang">Dart</span><span class="repo-stats">· 0 stars</span></div>
-          <strong>Money-FlowX</strong>
-          <small>Budget planner app.</small>
-        </a>
-      </div>
-
-      <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
-        <a class="btn" href="https://github.com/paulsteven2329" target="_blank" rel="noopener">View all repos</a>
-        <span class="small-muted">Want featured case studies? Tell me which projects to highlight and I’ll add screenshots and details.</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="testimonials" class="section">
-    <div class="wrap">
-      <h2 style="margin:0;font-family:var(--serif);font-weight:700">Testimonials</h2>
-      <p class="small-muted" style="margin-top:8px">Short recommendations from product and engineering stakeholders.</p>
-      <div class="testimonials" style="margin-top:18px">
-        <div class="testimonial fade-up" data-fade>
-          <div style="font-weight:700">"Paul delivered a production RAG system that replaced a time-consuming manual process — the team now trusts answers."</div>
-          <div class="subtle" style="margin-top:8px">— Product lead, enterprise client</div>
+      <!-- Process & Guarantees -->
+      <aside class="lg:col-span-5 armor-card p-6 space-y-6 fade-up" data-fade>
+        <div>
+          <h3 class="font-cinzel font-bold text-doom-gold uppercase tracking-wider text-base">Process & Guarantees</h3>
+          <p class="text-xs font-mono text-doom-muted mt-1">How I structure engagements so outcomes are predictable.</p>
         </div>
-        <div class="testimonial fade-up" data-fade>
-          <div style="font-weight:700">"He found performance bottlenecks and reduced latency across our most critical endpoints. Highly recommended."</div>
-          <div class="subtle" style="margin-top:8px">— Engineering manager, SaaS</div>
+
+        <div class="grid grid-cols-2 gap-3 font-mono">
+          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
+            <span class="text-xs text-doom-emerald font-bold">01 / DISCOVERY</span>
+            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Discovery</h4>
+            <p class="text-[11px] text-doom-muted mt-1 leading-tight">Goal, KPIs & architecture review</p>
+          </div>
+
+          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
+            <span class="text-xs text-doom-emerald font-bold">02 / PROOF</span>
+            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Proof</h4>
+            <p class="text-[11px] text-doom-muted mt-1 leading-tight">MVP, benchmarks, acceptance criteria</p>
+          </div>
+
+          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
+            <span class="text-xs text-doom-emerald font-bold">03 / SHIP</span>
+            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Ship</h4>
+            <p class="text-[11px] text-doom-muted mt-1 leading-tight">Deployment, testing, monitoring</p>
+          </div>
+
+          <div class="p-3.5 rounded bg-doom-bg/70 border border-doom-border/60">
+            <span class="text-xs text-doom-emerald font-bold">04 / OPERATE</span>
+            <h4 class="font-cinzel font-bold text-slate-200 text-sm mt-1">Operate</h4>
+            <p class="text-[11px] text-doom-muted mt-1 leading-tight">Runbooks, SLOs, handover</p>
+          </div>
         </div>
-      </div>
+      </aside>
+
     </div>
   </section>
 
-  <section id="contact" class="section">
-    <div class="wrap">
-      <h2 style="margin:0;font-family:var(--serif);font-weight:700">Contact</h2>
-      <p class="small-muted" style="margin-top:8px">Tell me what you’re building — I’ll reply within 24 hours.</p>
-      <div style="margin-top:18px">
-        <a class="btn-accent" href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry">Email — paulsteven2930@gmail.com</a>
+  <!-- SELECTED WORK / PROJECTS -->
+  <section id="projects" class="pt-10 border-t border-doom-border/60">
+    <div class="space-y-2 mb-8">
+      <h2 class="font-cinzel text-3xl font-bold text-slate-100 tracking-wide uppercase">Selected Work</h2>
+      <p class="text-sm font-mono text-doom-muted">Concise case highlights designed for recruiters and engineering leads.</p>
+    </div>
+
+    <div class="space-y-6">
+      
+      <!-- Project 1 -->
+      <article class="armor-card p-6 sm:p-8 space-y-4 fade-up" data-fade>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-doom-border/60 pb-4">
+          <div>
+            <h3 class="font-cinzel text-xl font-bold text-slate-100">RAG AI System — Enterprise Knowledge</h3>
+            <p class="text-xs font-mono text-doom-muted mt-1">
+              <span class="text-slate-300">Problem:</span> slow manual document search &nbsp;|&nbsp; 
+              <span class="text-slate-300">Solution:</span> full RAG pipeline &nbsp;|&nbsp; 
+              <span class="text-slate-300">Result:</span> 92% accuracy at scale
+            </p>
+          </div>
+          <div class="font-mono text-xs font-bold px-3 py-1.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-glow w-max">
+            Impact: 92% Accuracy
+          </div>
+        </div>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+          Built custom chunking, embeddings and search stacks (FAISS, vector store) with a FastAPI service and production monitoring. Replaced manual review workflows and reduced human effort by X% (client confidential).
+        </p>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="armor-card p-6 sm:p-8 space-y-4 fade-up" data-fade>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-doom-border/60 pb-4">
+          <div>
+            <h3 class="font-cinzel text-xl font-bold text-slate-100">Query Optimisation — Transactional Backend</h3>
+            <p class="text-xs font-mono text-doom-muted mt-1">
+              <span class="text-slate-300">Problem:</span> timeouts and slow endpoints &nbsp;|&nbsp; 
+              <span class="text-slate-300">Solution:</span> profiling, indexes, caching &nbsp;|&nbsp; 
+              <span class="text-slate-300">Result:</span> 77% faster queries
+            </p>
+          </div>
+          <div class="font-mono text-xs font-bold px-3 py-1.5 rounded bg-doom-gold/10 border border-doom-gold/30 text-doom-gold w-max">
+            Impact: −77% Latency
+          </div>
+        </div>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+          Used EXPLAIN ANALYZE, rewrote N+1 patterns and added caching layers; throughput and error rates improved under load.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- GITHUB REPOSITORIES -->
+  <section id="github-projects" class="pt-10 border-t border-doom-border/60">
+    <div class="space-y-2 mb-8">
+      <h2 class="font-cinzel text-3xl font-bold text-slate-100 tracking-wide uppercase">GitHub Archives</h2>
+      <p class="text-sm font-mono text-doom-muted">Public repositories — production projects, tooling and experiments. Click to view code and read READMEs.</p>
+    </div>
+
+    <!-- Repos Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      
+      <a href="https://github.com/paulsteven2329/Agentic-Codebase-Analyzer" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
+        <div>
+          <div class="flex items-center justify-between font-mono text-xs mb-2">
+            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
+            <span class="text-doom-muted">· 0 stars</span>
+          </div>
+          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Agentic-Codebase-Analyzer</h3>
+          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">AI-powered code analysis and insight extraction.</p>
+        </div>
+        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
+      </a>
+
+      <a href="https://github.com/paulsteven2329/Agentic-Multimodal-ai" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
+        <div>
+          <div class="flex items-center justify-between font-mono text-xs mb-2">
+            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
+            <span class="text-doom-muted">· 0 stars</span>
+          </div>
+          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Agentic-Multimodal-ai</h3>
+          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">Multimodal agent experiments.</p>
+        </div>
+        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
+      </a>
+
+      <a href="https://github.com/paulsteven2329/GenAI_Image_Generater" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
+        <div>
+          <div class="flex items-center justify-between font-mono text-xs mb-2">
+            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
+            <span class="text-doom-muted">· 0 stars</span>
+          </div>
+          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">GenAI_Image_Generater</h3>
+          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">Generative image experiments & tooling.</p>
+        </div>
+        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
+      </a>
+
+      <a href="https://github.com/paulsteven2329/FAST_API" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
+        <div>
+          <div class="flex items-center justify-between font-mono text-xs mb-2">
+            <span class="px-2 py-0.5 rounded bg-doom-emerald/10 border border-doom-emerald/30 text-doom-emerald">Python</span>
+            <span class="text-doom-muted">· 0 stars</span>
+          </div>
+          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">FAST_API</h3>
+          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">FastAPI backends and integration examples.</p>
+        </div>
+        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
+      </a>
+
+      <a href="https://github.com/paulsteven2329/Flutter_Animation" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
+        <div>
+          <div class="flex items-center justify-between font-mono text-xs mb-2">
+            <span class="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">Dart</span>
+            <span class="text-doom-muted">· 0 stars</span>
+          </div>
+          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Flutter_Animation</h3>
+          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">UI motion and animation proofs-of-concept.</p>
+        </div>
+        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
+      </a>
+
+      <a href="https://github.com/paulsteven2329/Money-FlowX" target="_blank" rel="noopener" class="armor-card p-5 group flex flex-col justify-between h-40 fade-up" data-fade>
+        <div>
+          <div class="flex items-center justify-between font-mono text-xs mb-2">
+            <span class="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">Dart</span>
+            <span class="text-doom-muted">· 0 stars</span>
+          </div>
+          <h3 class="font-cinzel font-bold text-slate-100 group-hover:text-doom-gold transition-colors text-base">Money-FlowX</h3>
+          <p class="text-xs text-doom-muted mt-1.5 line-clamp-2">Budget planner app.</p>
+        </div>
+        <span class="text-xs font-mono text-doom-emerald flex items-center gap-1 group-hover:translate-x-1 transition-transform">Inspect Repo &rarr;</span>
+      </a>
+
+    </div>
+
+    <!-- Extra link info -->
+    <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t border-doom-border/40">
+      <a href="https://github.com/paulsteven2329" target="_blank" rel="noopener" class="px-5 py-2.5 rounded border border-doom-border bg-doom-surface text-doom-text font-mono text-xs uppercase tracking-wider hover:border-doom-emerald hover:text-doom-glow transition-all">
+        View All Repositories &rarr;
+      </a>
+      <span class="text-xs text-doom-muted font-mono">Want featured case studies? Tell me which projects to highlight and I’ll add screenshots and details.</span>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="pt-10 border-t border-doom-border/60">
+    <div class="armor-card chamfer-corner p-8 sm:p-12 space-y-6 text-center max-w-3xl mx-auto">
+      <h2 class="font-cinzel text-3xl font-black text-slate-100 tracking-wider uppercase">Initiate Contact</h2>
+      <p class="text-slate-300 font-sans text-sm sm:text-base max-w-md mx-auto">
+        Tell me what you’re building — I’ll reply within 24 hours.
+      </p>
+
+      <div class="pt-4">
+        <a href="mailto:paulsteven2930@gmail.com?subject=Project%20enquiry" class="inline-block px-8 py-4 rounded bg-gradient-to-r from-doom-emerald via-emerald-600 to-teal-700 text-black font-bold font-mono text-sm tracking-widest uppercase hover:brightness-110 hover:shadow-[0_0_25px_rgba(0,255,170,0.6)] transition-all">
+          Email — paulsteven2930@gmail.com
+        </a>
       </div>
-      <div style="margin-top:12px;color:var(--muted)"><a style="color:var(--muted);text-decoration:none" href="tel:+919108800104">+91 91088 00104</a> &nbsp; • &nbsp; <a style="color:var(--muted);text-decoration:none" href="https://www.linkedin.com/in/paul-stephen-sde1-2b974027a" target="_blank" rel="noopener">LinkedIn</a></div>
+
+      <div class="flex items-center justify-center gap-6 pt-4 font-mono text-xs text-doom-muted">
+        <a href="tel:+919108800104" class="hover:text-doom-emerald transition-colors">+91 91088 00104</a>
+        <span>•</span>
+        <a href="https://www.linkedin.com/in/paul-stephen-sde1-2b974027a" target="_blank" rel="noopener" class="hover:text-doom-emerald transition-colors">LinkedIn Profile</a>
+      </div>
     </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <div class="wrap">Paul Stephen — Bengaluru, India</div>
+<!-- FOOTER -->
+<footer class="border-t border-doom-border/60 py-8 bg-doom-bg font-mono text-xs text-doom-muted">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-doom-emerald"></span>
+      <span>Paul Stephen — Bengaluru, India</span>
+    </div>
+    <div class="text-doom-darkmuted">
+      Latverian Sovereign Minimal UI Edition
+    </div>
+  </div>
 </footer>
 
+<!-- SCRIPT FOR FADE IN AND NAV ACTIVE STATES -->
 <script>
-// Lightweight interaction: set nav active state, fade-in sections, hash routing
 (function(){
   const prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
@@ -287,33 +529,41 @@ main{padding:36px 0}
       entries.forEach(e=>{
         if(e.isIntersecting) e.target.classList.add('in');
       });
-    },{threshold:0.12});
+    },{threshold:0.1});
     fadeEls.forEach(el=>io.observe(el));
   } else {
     fadeEls.forEach(el=>el.classList.add('in'));
   }
 
-  // Simple hash-based nav current state
+  // Hash navigation active handling
   const navLinks = document.querySelectorAll('nav a[href^="#"]');
   function setCurrent(){
     const hash = location.hash || '#top';
-    navLinks.forEach(a=>a.removeAttribute('aria-current'));
-    const match = Array.from(navLinks).find(a=>a.getAttribute('href')===hash);
-    if(match) match.setAttribute('aria-current','true');
+    navLinks.forEach(a=>{
+      if(a.getAttribute('href')===hash){
+        a.classList.add('text-doom-emerald', 'bg-doom-panel');
+        a.classList.remove('text-doom-muted');
+      } else {
+        a.classList.remove('text-doom-emerald', 'bg-doom-panel');
+        a.classList.add('text-doom-muted');
+      }
+    });
   }
   window.addEventListener('hashchange', setCurrent, {passive:true});
   window.addEventListener('load', setCurrent, {passive:true});
 
-  // Enhance in-page nav: smooth scroll and history push
+  // Smooth click scroll
   navLinks.forEach(a=>{
     a.addEventListener('click', (e)=>{
       const href = a.getAttribute('href');
       if(href && href.startsWith('#')){
         e.preventDefault();
         const el = document.querySelector(href);
-        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-        history.replaceState(null,'',href);
-        setCurrent();
+        if(el){
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+          history.replaceState(null,'',href);
+          setCurrent();
+        }
       }
     });
   });
